@@ -461,6 +461,46 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
 .crcard img,.crcard video{width:100%;height:100%;object-fit:cover;display:block}
 .crcard .crtag{position:absolute;left:8px;bottom:8px;font-family:var(--f-mono);font-size:.54rem;letter-spacing:.05em;color:#fff;background:rgba(0,0,0,.55);padding:3px 8px;border-radius:999px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
 @media (max-width:640px){.crwall-track{animation-duration:48s}}
+
+/* ===== EP.06 sites & landings showcase ===== */
+.ep6sites{display:flex;flex-direction:column;gap:9px;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:14px 15px;background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.015))}
+.ep6sites .sm-row{display:flex;align-items:center;gap:.6em;font-family:var(--f-mono);font-size:.72rem;color:var(--on-dark)}
+.ep6sites .sm-row b{font-weight:600}
+.ep6sites .sm-row em{margin-left:auto;font-style:normal;font-size:.6rem;color:var(--muted-d);text-align:right}
+.ep6sites .sm-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex:0 0 auto;box-shadow:0 0 8px rgba(255,196,0,.6)}
+.sitewall{margin-top:clamp(26px,4vh,46px)}
+.sw-h{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:14px;font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.sw-h .sw-sub{color:var(--muted-d)}
+.browser{border-radius:13px;overflow:hidden;background:#0d1512;border:1px solid rgba(255,255,255,.1);box-shadow:0 22px 52px -26px rgba(0,0,0,.85);margin:0}
+.browser .bar{display:flex;align-items:center;gap:9px;padding:8px 12px;background:#18211d;border-bottom:1px solid rgba(255,255,255,.07)}
+.browser .dots{display:flex;gap:5px;flex:0 0 auto}
+.browser .dots i{width:9px;height:9px;border-radius:50%;background:#3a4a44;display:block}
+.browser .url{font-family:var(--f-mono);font-size:.6rem;color:var(--muted-d);background:#0d1512;padding:3px 12px;border-radius:6px;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60%}
+.browser .swtag{margin-left:auto;font-family:var(--f-mono);font-size:.54rem;color:var(--accent);white-space:nowrap}
+.browser video,.browser img{width:100%;display:block}
+.browser.wide video{aspect-ratio:960/526;object-fit:cover;background:#0d1512}
+.browser figcaption{font-family:var(--f-mono);font-size:.58rem;letter-spacing:.02em;color:var(--muted-d);padding:9px 12px}
+.sw-landings{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.sw-landings .shot{max-height:220px;overflow:hidden;background:#0d1512}
+.sw-landings .shot img{object-position:top}
+@media (max-width:640px){.sw-landings{grid-template-columns:1fr}}
+
+/* ===== EP.07 before/after + clips ===== */
+.ep7ba{margin-top:clamp(26px,4vh,46px)}
+.ep7ba-h{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:12px;font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.ep7ba-h .ep7ba-sub{color:var(--muted-d)}
+.ep7ba-row{position:relative;margin:0;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:#0c0f14}
+.ep7ba-row img{width:100%;display:block}
+.ep7ba-row.hot{border-color:rgba(255,196,0,.5);box-shadow:0 0 0 1px rgba(255,196,0,.4),0 18px 40px -22px rgba(255,196,0,.3)}
+.ep7ba-tag{position:absolute;left:10px;top:10px;z-index:2;font-family:var(--f-mono);font-size:.58rem;letter-spacing:.04em;background:rgba(0,0,0,.62);color:#fff;padding:3px 9px;border-radius:999px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.ep7ba-tag.on{background:var(--accent);color:#241c00}
+.ep7ba-mid{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:9px 4px;font-family:var(--f-mono);font-size:.62rem;letter-spacing:.02em;color:var(--muted-d)}
+.ep7ba-mid .ep7ba-jump{color:var(--accent);font-weight:600;white-space:nowrap}
+.ep7clips{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.ytclip{margin:0;position:relative;border-radius:12px;overflow:hidden;background:#000;border:1px solid rgba(255,255,255,.1);box-shadow:0 16px 36px -22px rgba(0,0,0,.8)}
+.ytclip video{width:100%;display:block;aspect-ratio:16/9;object-fit:cover}
+.ytclip figcaption{position:absolute;left:0;right:0;bottom:0;font-family:var(--f-mono);font-size:.6rem;letter-spacing:.02em;color:#fff;padding:12px 10px 7px;background:linear-gradient(0deg,rgba(0,0,0,.74),transparent)}
+@media (max-width:640px){.ep7clips{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -763,17 +803,17 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
         <div class="epmasc"><span class="av"><img src="assets/img_1b92313df3.png" alt=""></span><span class="cap"><b>the builder</b></span></div>
         <div class="result glass"><span class="k">Dev saved</span><div class="big">−$2,000</div><span class="sub">landings by hand · analytics day 1</span></div>
         <div class="chips"><span class="chip logo"><img class="chiplogo" src="assets/img_9db1069a1f.png" alt="">Google AI Studio</span><span class="chip logo"><img class="chiplogo" src="assets/img_31bd2ad405.png" alt="">WordPress</span><span class="chip logo"><img class="chiplogo" src="assets/img_7d75d3806e.png" alt="">GA4</span></div>
-        <div class="proof">PROOF · landing &amp; site screenshots · analytics<br>[ screenshots go here ]</div>
+        <div class="ep6sites"><span class="sm-row"><span class="sm-dot"></span><b>Pionerskiy 2</b><em>landing · by hand</em></span><span class="sm-row"><span class="sm-dot"></span><b>Pionerskiy Business</b><em>landing · by hand</em></span><span class="sm-row"><span class="sm-dot"></span><b>Dobrograd</b><em>corporate site · directed</em></span></div>
       </aside>
     </div>
-    <div class="principle"><p class="subtitle">Build by hand where it's fast and cheap; direct a contractor where scale is needed.</p></div>
+    <div class="sitewall" aria-label="Sites and landings shipped"><div class="sw-h"><span>▶ Sites &amp; landings shipped</span><span class="sw-sub">2 landings by hand · 1 corporate site directed</span></div><figure class="browser wide"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">dobrograd.ua</span><span class="swtag">directed build · WordPress</span></div><video autoplay muted loop playsinline preload="metadata"><source src="assets/ep6_dobro.webm" type="video/webm"><source src="assets/ep6_dobro.mp4" type="video/mp4"></video><figcaption>Dobrograd — developer’s main site · brief, contractor control, analytics from day one</figcaption></figure><div class="sw-landings"><figure class="browser"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">pionerskiy2.com.ua</span></div><div class="shot"><img src="assets/ep6_land_pio.jpg" alt="Pionerskiy 2 landing page" loading="lazy"></div><figcaption>Pionerskiy 2 · project landing (built by hand)</figcaption></figure><figure class="browser"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">buisness.pionerskiy.com.ua</span></div><div class="shot"><img src="assets/ep6_land_biz.jpg" alt="Pionerskiy Business landing page" loading="lazy"></div><figcaption>Pionerskiy Business · commercial landing (built by hand)</figcaption></figure></div></div><div class="principle"><p class="subtitle">Build by hand where it's fast and cheap; direct a contractor where scale is needed.</p></div>
   </div>
 </section>
 
 <!-- EPISODE 07 (finale) -->
 <section id="ep7" class="section ep dark snap" aria-labelledby="ep7-h">
   <div class="wrap">
-    <div class="chyron"><div class="tab">EP.07</div><div class="bar"><span class="k">YouTube · Factum Auto</span><span class="t" id="ep7-h">From 800 to 40,000 — by not talking about ourselves</span></div></div>
+    <div class="chyron"><div class="tab">EP.07</div><div class="bar"><span class="k">YouTube · Factum Auto</span><span class="t" id="ep7-h">From 800 to 40,000 views — by not talking about ourselves</span></div></div>
     <div class="ep-grid">
       <div class="beats">
         <div class="beat"><span class="k">Constraint</span><p class="v">An abandoned YouTube channel (~800 views); the audience had no interest in "about us"; plus customers' fear of being cheated when buying a car from abroad.</p></div>
@@ -785,10 +825,10 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
         <div class="epmasc"><span class="av"><img src="assets/img_69ef5e4a50.png" alt=""></span><span class="cap"><b>the showrunner</b></span></div>
         <div class="result glass"><span class="k">YouTube views / video</span><div class="big">800→40k</div><span class="sub">IG 5k→14k · CPA −20%</span></div>
         <div class="chips"><span class="chip">YouTube</span><span class="chip logo"><img class="chiplogo" src="assets/img_250b3ad3ad.png" alt="">ManyChat</span><span class="chip">Influencers</span></div>
-        <div class="proof">PROOF · YouTube analytics · "honest" video examples · IG growth<br>[ screenshots go here ]</div>
+        <div class="ep6sites"><span class="sm-row"><span class="sm-dot"></span><b>Before</b><em>~800 views / video</em></span><span class="sm-row"><span class="sm-dot"></span><b>After</b><em>30–40k views / video</em></span><span class="sm-row"><span class="sm-dot"></span><b>Instagram</b><em>5k → 14k · +0 → 10k</em></span></div>
       </aside>
     </div>
-    <div class="principle"><p class="subtitle">Honesty and wide topics travel further than self-promotion.</p></div>
+    <div class="ep7ba" aria-label="Channel views before and after"><div class="ep7ba-h"><span>▶ Same channel · before → after</span><span class="ep7ba-sub">organic views per video</span></div><figure class="ep7ba-row"><span class="ep7ba-tag">BEFORE · ~800 views</span><img src="assets/ep7_before.jpg" alt="Old videos around 800 views" loading="lazy"></figure><div class="ep7ba-mid"><span>stopped advertising ourselves → honest, wide topics</span><span class="ep7ba-jump">≈ ×40 views</span></div><figure class="ep7ba-row hot"><span class="ep7ba-tag on">AFTER · 30–40k views</span><img src="assets/ep7_after.jpg" alt="New videos at 30-40k views" loading="lazy"></figure><div class="ep7clips"><figure class="ytclip"><video autoplay muted loop playsinline preload="metadata"><source src="assets/ep7_clip1.webm" type="video/webm"><source src="assets/ep7_clip1.mp4" type="video/mp4"></video><figcaption>▶ Honest review · Honda CR-V</figcaption></figure><figure class="ytclip"><video autoplay muted loop playsinline preload="metadata"><source src="assets/ep7_clip2.webm" type="video/webm"><source src="assets/ep7_clip2.mp4" type="video/mp4"></video><figcaption>▶ The car, up close</figcaption></figure></div></div><div class="principle"><p class="subtitle">Honesty and wide topics travel further than self-promotion.</p></div>
   </div>
 </section>
 
@@ -930,7 +970,7 @@ document.getElementById('pow').onclick=function(){
     ep4:"A logo isn't a brand. (I'll die on this hill.)",
     ep5:"I bring the crowd. You bring the canapés.",
     ep6:"Saved $2k — the page still slaps.",
-    ep7:"800 → 40,000 subs. The mic did half of it.",
+    ep7:"800 views → 40,000. Honesty travels further.",
     ep8:"Directed a brand film. Cried twice. Worth it."
   };
   var CLASS_LINES=[['about',"Journalist turned marketer — still asking too many questions."],
