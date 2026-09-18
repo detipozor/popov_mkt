@@ -369,6 +369,14 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
   color:#ffd21a;font-family:var(--f-body);font-weight:800;font-size:clamp(.9rem,1.35vw,1.12rem);line-height:1.24;
   text-shadow:0 2px 6px rgba(0,0,0,.92),0 0 2px #000,0 0 2px #000;opacity:0;transition:opacity .35s ease}
 .buddy.right .buddy-sub{left:auto;right:0;text-align:right}
+.buddy-fig{pointer-events:auto;cursor:pointer}
+.buddy-menu{position:absolute;bottom:100%;left:0;margin-bottom:10px;display:flex;gap:8px;opacity:0;transform:translateY(8px) scale(.96);pointer-events:none;transition:opacity .26s ease,transform .26s cubic-bezier(.2,.9,.3,1.2);z-index:3}
+.buddy.right .buddy-menu{left:auto;right:0}
+.buddy.menuopen .buddy-menu{opacity:1;transform:none;pointer-events:auto}
+.buddy.menuopen .buddy-sub{opacity:0}
+.bm-btn{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;background:rgba(255,255,255,.15);-webkit-backdrop-filter:blur(12px) saturate(1.5);backdrop-filter:blur(12px) saturate(1.5);border:1px solid rgba(255,255,255,.38);box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 8px 20px -8px rgba(0,0,0,.65);transition:transform .12s ease,background .2s;text-decoration:none}
+.bm-btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.26)}
+.bm-btn svg{width:20px;height:20px;display:block;fill:currentColor}
 .buddy-sub.on{opacity:1}
 @media (max-width:640px){
   .buddy{width:88px;bottom:12px;left:12px}
@@ -523,6 +531,28 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
 .brandwall{margin-top:clamp(26px,4vh,46px)}
 .bw-h{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:14px;font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
 .bw-h .bw-sub{color:var(--muted-d)}
+.bw-feature{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(16px,3vw,36px);align-items:center;margin-bottom:clamp(22px,4vh,40px)}
+.deriv-reveal{position:relative;aspect-ratio:600/1000;max-height:min(72vh,640px);width:100%;margin:0 auto;border-radius:16px;overflow:hidden}
+.deriv-reveal img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
+.dr-paint{transition:filter 1.3s ease,opacity 1.3s ease,transform 1.3s ease;border-radius:16px}
+.deriv-reveal.revealed .dr-paint{filter:grayscale(1) brightness(.42) contrast(1.05);opacity:.14;transform:scale(1.04)}
+.dr-mark{opacity:0;clip-path:inset(0 0 100% 0);transition:clip-path 1.4s cubic-bezier(.4,0,.2,1),opacity .5s ease .1s;filter:drop-shadow(0 8px 22px rgba(0,0,0,.55))}
+.deriv-reveal.revealed .dr-mark{opacity:1;clip-path:inset(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){.dr-mark{transition:none}.dr-paint{transition:none}}
+.dr-tag{position:absolute;left:12px;bottom:10px;z-index:2;font-family:var(--f-mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+.bw-feature-txt{align-self:center}
+.bw-ft-kicker{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.bw-ft-h{font-size:clamp(1.5rem,3.2vw,2.1rem);line-height:1.05;margin:0 0 12px;color:#fff}
+.bw-ft-p{color:rgba(237,235,228,.72);font-size:clamp(.86rem,1.4vw,1rem);line-height:1.5;margin:0 0 16px;max-width:46ch}
+.bw-ft-final{width:min(240px,62%);display:block;border-radius:12px;border:1px solid rgba(255,255,255,.1)}
+.bw-proc{margin-bottom:clamp(18px,3vh,32px)}
+.bw-proc-h{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.bw-proc-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.bw-step{margin:0;position:relative;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:#0d1512}
+.bw-step img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
+.bw-step-n{position:absolute;top:8px;left:10px;z-index:2;font-family:var(--f-mono);font-size:.72rem;color:var(--accent);text-shadow:0 1px 4px rgba(0,0,0,.85)}
+.bw-step figcaption{position:absolute;left:0;right:0;bottom:0;font-family:var(--f-mono);font-size:.56rem;letter-spacing:.02em;color:#fff;padding:10px 8px 6px;background:linear-gradient(0deg,rgba(0,0,0,.72),transparent)}
+@media(max-width:760px){.bw-feature{grid-template-columns:1fr;gap:18px}.deriv-reveal{max-height:64vh}}
 .bw-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;align-items:stretch}
 .bw-deriv{margin:0;position:relative;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:#1b2436}
 .bw-deriv img{width:100%;display:block}
@@ -643,11 +673,10 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
 .headbox.talking .headstrip{animation:headtalk 1.9s steps(35) 1 both}
 .headbox.talkloop .headstrip{animation:headtalk 1.9s steps(35) infinite}
 .headbox.headdrop{animation:none!important;transform:translateY(20%) rotate(-8deg);transition:transform .55s cubic-bezier(.33,0,.2,1);transform-origin:50% 58%}
-.sadstrip{position:absolute;top:0;left:0;height:100%;width:auto;max-width:none;display:none}
-@keyframes sadplay{from{transform:translateX(0)}to{transform:translateX(-97.2222%)}}
+.sadvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;background:#000}
 .headbox.sadmode{animation:none}
 .headbox.sadmode .headstrip{display:none}
-.headbox.sadmode .sadstrip{display:block;animation:sadplay 2.4s steps(35) forwards}
+.headbox.sadmode .sadvid{display:block!important}
 @media (prefers-reduced-motion:reduce){.headbox{animation:none}.headbox.talking .headstrip,.headbox.talkloop .headstrip{animation:none}.headbox.headdrop{animation:none;transform:translateY(15%) rotate(-6deg)}}
 @media (max-width:640px){.buddy-fig{filter:drop-shadow(0 5px 9px rgba(0,0,0,.22))}}
 @media (max-width:640px){
@@ -687,7 +716,7 @@ html{overflow-x:clip}
 
  <div id="crtdot"></div>
   <div class="mascot-wrap" id="mwrap">
-    <div class="headbox mhead-c" id="mHeadBox"><img class="headstrip" id="mHeadStrip" src="assets/head_sprite.webp" alt="Kostiantyn"><img class="sadstrip" id="mSadStrip" alt="" aria-hidden="true"></div>
+    <div class="headbox mhead-c" id="mHeadBox"><img class="headstrip" id="mHeadStrip" src="assets/head_sprite.webp" alt="Kostiantyn"><video class="sadvid" id="mSadVid" muted playsinline preload="none" aria-hidden="true"><source src="assets/sad_mobile.mp4" type="video/mp4"></video></div>
     <video id="v_sweep" muted playsinline preload="metadata"><source src="assets/v_5497a98295.webm" type="video/webm"></video>
     <video id="v_idle" class="on" muted playsinline loop preload="metadata"><source src="assets/v_8131016505.webm" type="video/webm"></video>
     <video id="v_look" muted playsinline preload="metadata"><source src="assets/v_b1d2fef44b.webm" type="video/webm"></video>
@@ -925,7 +954,7 @@ html{overflow-x:clip}
         <div class="chips"><span class="chip">Dobrograd</span><span class="chip">Iron Invest</span><span class="chip">SERM</span></div>
         <div class="ep6sites serm"><div class="serm-h">SERM · reputation in search &amp; AI</div><span class="sm-row"><span class="sm-dot"></span><b>DIM.RIA rating</b><em>100%</em></span><span class="sm-row"><span class="sm-dot"></span><b>On the market</b><em>15 years · est. 2011</em></span><span class="sm-row"><span class="sm-dot"></span><b>Delivered</b><em>41 buildings</em></span><span class="sm-row"><span class="sm-dot"></span><b>Problematic objects</b><em>0</em></span><span class="sm-row"><span class="sm-dot"></span><b>Award</b><em>Best Enterprise UA 2020</em></span><span class="serm-src">DIM.RIA · LUN · nerukhomi.ua</span></div></aside>
     </div>
-    <div class="brandwall" aria-label="Brand system"><div class="bw-h"><span>▶ Brand system — built to mean something</span><span class="bw-sub">logo · identity · brandbook · in the wild</span></div><div class="bw-grid"><figure class="bw-deriv"><img src="assets/ep4_deriv.jpg" alt="Reference painting derived into the knight mark" loading="lazy"><figcaption>Reference → the mark · “Defined by Iron Will”</figcaption></figure><div class="bw-side"><figure class="bw-logo"><img src="assets/img_3fdd799853.jpg" alt="Iron Invest Group logo" loading="lazy"><figcaption>Iron Invest Group · logo from scratch</figcaption></figure><figure class="bw-logo"><img src="assets/img_28ac202e71.jpg" alt="Dobrograd logo" loading="lazy"><figcaption>Dobrograd · rebrand</figcaption></figure></div></div><div class="bw-mocks"><figure><img src="assets/ep4_mk_billboard.jpg" alt="Billboard" loading="lazy"><figcaption>Billboard</figcaption></figure><figure><img src="assets/ep4_mk_sign.jpg" alt="Signage" loading="lazy"><figcaption>Signage</figcaption></figure><figure><img src="assets/ep4_mk_stationery.jpg" alt="Stationery" loading="lazy"><figcaption>Stationery</figcaption></figure><figure><img src="assets/ep4_mk_poster.jpg" alt="OOH poster" loading="lazy"><figcaption>OOH poster</figcaption></figure></div><div class="bw-bb"><div class="bw-bb-h">Dobrograd · brandbook</div><div class="bw-bb-scroll"><img src="assets/ep4_brandbook.jpg" alt="Dobrograd brandbook" loading="lazy"></div></div></div><div class="principle"><p class="subtitle">A brand with no meaning is just a picture; meaning and coherence build trust.</p></div>
+    <div class="brandwall" aria-label="Brand system"><div class="bw-h"><span>▶ Brand system — built to mean something</span><span class="bw-sub">from a painting to a living identity</span></div><div class="bw-feature"><div class="deriv-reveal" id="derivReveal"><img class="dr-paint" src="assets/ep4_painting.jpg" alt="Reference painting" loading="lazy"><img class="dr-mark" src="assets/ep4_mark.webp" alt="Iron Invest knight mark" loading="lazy"><span class="dr-tag">Reference → the mark</span></div><div class="bw-feature-txt"><div class="bw-ft-kicker">Iron Invest Group · logo from scratch</div><h3 class="bw-ft-h">Defined by Iron Will</h3><p class="bw-ft-p">The mark is drawn straight from the reference — the same resolute pose distilled into one line-art symbol that carries meaning, not decoration.</p><img class="bw-ft-final" src="assets/img_3fdd799853.jpg" alt="Iron Invest Group logo" loading="lazy"></div></div><div class="bw-proc"><div class="bw-proc-h">Logo from scratch · the build</div><div class="bw-proc-row"><figure class="bw-step"><span class="bw-step-n">01</span><img src="assets/ep4_proc_ref.jpg" alt="Reference" loading="lazy"><figcaption>Reference</figcaption></figure><figure class="bw-step"><span class="bw-step-n">02</span><img src="assets/ep4_proc_mark.jpg" alt="Line mark" loading="lazy"><figcaption>Line mark</figcaption></figure><figure class="bw-step"><span class="bw-step-n">03</span><img src="assets/img_3fdd799853.jpg" alt="Final lockup" loading="lazy"><figcaption>Final lockup</figcaption></figure></div></div><div class="bw-bb"><div class="bw-bb-h">Dobrograd · brandbook</div><div class="bw-bb-scroll"><img src="assets/ep4_brandbook.jpg" alt="Dobrograd brandbook" loading="lazy"></div></div></div><div class="principle"><p class="subtitle">A brand with no meaning is just a picture; meaning and coherence build trust.</p></div>
   </div>
 </section>
 
@@ -1096,20 +1125,21 @@ document.getElementById('pow').onclick=function(){
   if(catCur){try{catCur.pause();}catch(e){}catCur.classList.remove('on');catCur=null;heroEl.classList.remove('catplaying');}
   clearTimeout(idleTimer); tRZ=tTX=tTY=0; mode='react';
   off=true; crt('off'); setTimeout(dotFlash,360); paint();     // TV goes dark first
-  var _mh=document.getElementById('mHeadBox'),_ss=document.getElementById('mSadStrip');
+  var _mh=document.getElementById('mHeadBox'),_sv=document.getElementById('mSadVid');
   setTimeout(function(){                                        // once dark, mascot speaks while going sad
     heroSay(BYE[Math.floor(Math.random()*BYE.length)]);
-    if(MOB && _mh && _ss){                                      // mobile: play the sad sprite (sad face, head lowers, mouth talks)
-      if(!_ss.getAttribute('src')) _ss.src='assets/sad_sprite.webp';
+    if(MOB && _mh && _sv){                                      // mobile: smooth sad video on black (matches desktop, 24fps)
       _mh.classList.remove('talkloop','headdrop');
-      _ss.classList.remove('sadplay'); void _ss.offsetWidth; _mh.classList.add('sadmode');
+      try{ _sv.currentTime=0; var _pp=_sv.play(); if(_pp&&_pp.catch)_pp.catch(function(){}); }catch(e){}
+      _mh.classList.add('sadmode');
       setTimeout(function(){
         heroHush();
         _mh.classList.remove('sadmode');
+        try{ _sv.pause(); }catch(e){}
         off=false; crt('on'); dotFlash(); paint();
         powBusy=false; goIdle();
-      }, 2600);
-    } else {                                                    // desktop: real sad (alpha) video
+      }, 5200);
+    } else {                                                    // desktop: real sad (alpha) video, full length
       playThen('sad',function(){
         heroHush();
         off=false; crt('on'); dotFlash(); paint();
@@ -1133,18 +1163,21 @@ document.getElementById('pow').onclick=function(){
 })();
 </script>
 <script>
-/* hero head (mobile): preload the sad sprite so power-off shows a genuine sad face (iOS can't play the alpha video). */
+/* hero head (mobile): preload the smooth sad video (H.264 on black) for the power-off, iOS-friendly & 24fps. */
 (function(){
-  var ss=document.getElementById('mSadStrip'); if(!ss)return;
-  function pre(){ if(!ss.getAttribute('src')) ss.src='assets/sad_sprite.webp'; }
-  if(document.readyState==='complete') setTimeout(pre,400);
-  else window.addEventListener('load',function(){ setTimeout(pre,400); });
+  var v=document.getElementById('mSadVid'); if(!v)return;
+  function pre(){ try{ v.preload='auto'; v.load(); }catch(e){} }
+  if(document.readyState==='complete') setTimeout(pre,600);
+  else window.addEventListener('load',function(){ setTimeout(pre,600); });
 })();
 </script>
-<div id="buddy" class="buddy" aria-hidden="true"><div class="buddy-sub" id="buddySub"></div><div class="buddy-fig" id="buddyFig"><div class="headbox" id="b_headbox"><img class="headstrip" id="b_talk" src="assets/head_sprite.webp" alt="Kostiantyn"></div></div></div><script>
+<div id="buddy" class="buddy" aria-hidden="true"><div class="buddy-menu" id="buddyMenu"><a class="bm-btn" href="mailto:kosxok@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 4h17A1.5 1.5 0 0 1 22 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 18.5v-13A1.5 1.5 0 0 1 3.5 4Zm.7 2 7.8 5.6L19.8 6H4.2ZM20 7.9l-7.4 5.3a1 1 0 0 1-1.2 0L4 7.9V18h16V7.9Z"/></svg></a><a class="bm-btn" href="https://www.linkedin.com/in/kostiantyn-mkt/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0 0-5ZM3 9h4v12H3V9Zm6 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95C20.4 8.75 22 10.7 22 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.57-2.3 3.2V21H9V9Z"/></svg></a></div><div class="buddy-sub" id="buddySub"></div><div class="buddy-fig" id="buddyFig"><div class="headbox" id="b_headbox"><img class="headstrip" id="b_talk" src="assets/head_sprite.webp" alt="Kostiantyn"></div></div></div><script>
 (function(){
   var buddy=document.getElementById('buddy'),fig=document.getElementById('buddyFig'),sub=document.getElementById('buddySub');
   var talk=document.getElementById('b_talk');
+  var _menu=document.getElementById('buddyMenu');
+  if(fig){ fig.addEventListener('click',function(e){ e.stopPropagation(); buddy.classList.toggle('menuopen'); }); }
+  document.addEventListener('click',function(e){ if(buddy.classList.contains('menuopen') && !buddy.contains(e.target)) buddy.classList.remove('menuopen'); });
   var rm=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
   var LINES={
     contents:"Eight episodes. Zero filler. Popcorn optional.",
@@ -1251,5 +1284,6 @@ document.getElementById('pow').onclick=function(){
     wrap.appendChild(cta);
   });
 })();
-</script></body>
+</script><script>(function(){var el=document.getElementById("derivReveal");if(!el)return;if(!("IntersectionObserver" in window)){el.classList.add("revealed");return;}new IntersectionObserver(function(es){es.forEach(function(e){el.classList.toggle("revealed", e.isIntersecting && e.intersectionRatio>0.32);});},{threshold:[0,0.32,0.6]}).observe(el);})();</script>
+</body>
 </html>
