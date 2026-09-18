@@ -641,7 +641,10 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
 @keyframes headbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3.2%)}}
 @keyframes headtalk{from{transform:translateX(0)}to{transform:translateX(-97.2222%)}}
 .headbox.talking .headstrip{animation:headtalk 1.9s steps(35) 1 both}
-@media (prefers-reduced-motion:reduce){.headbox{animation:none}.headbox.talking .headstrip{animation:none}}
+.headbox.talkloop .headstrip{animation:headtalk 1.9s steps(35) infinite}
+@keyframes headdrop{to{transform:translateY(9%) rotate(-3deg)}}
+.headbox.headdrop{animation:headdrop .5s ease forwards;transform-origin:50% 80%}
+@media (prefers-reduced-motion:reduce){.headbox{animation:none}.headbox.talking .headstrip,.headbox.talkloop .headstrip{animation:none}.headbox.headdrop{animation:none;transform:translateY(7%)}}
 @media (max-width:640px){.buddy-fig{filter:drop-shadow(0 5px 9px rgba(0,0,0,.22))}}
 @media (max-width:640px){
   .mascot-wrap video{display:none!important}
@@ -653,7 +656,7 @@ html{overflow-x:clip}
 
 /* ===== About: podcast mic (white) ===== */
 .micstudio{position:relative;background:var(--paper);overflow:hidden;border:none}
-.micstudio .micvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:block}
+.micstudio .micvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:block;transform:rotate(var(--microt,0deg));transform-origin:50% 50%;transition:transform .12s linear;will-change:transform}
 .ms-onair{position:absolute;top:14px;right:14px;z-index:3;display:flex;align-items:center;gap:.5em;font-family:var(--f-mono);font-size:.58rem;letter-spacing:.16em;color:#fff;background:rgba(224,54,44,.95);padding:5px 12px;border-radius:999px;box-shadow:0 6px 16px -4px rgba(224,54,44,.55);opacity:0;transform:translateY(-5px) scale(.96);transition:opacity .5s ease,transform .5s ease}
 .ms-onair i{width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff}
 .micstudio.live .ms-onair{opacity:1;transform:none}
@@ -680,7 +683,6 @@ html{overflow-x:clip}
 
  <div id="crtdot"></div>
   <div class="mascot-wrap" id="mwrap">
-    <img id="mheadimg" class="mhead" src="assets/head.png" alt="Kostiantyn" width="440" height="430">
     <div class="headbox mhead-c" id="mHeadBox"><img class="headstrip" id="mHeadStrip" src="assets/head_sprite.webp" alt="Kostiantyn"></div>
     <video id="v_sweep" muted playsinline preload="metadata"><source src="assets/v_5497a98295.webm" type="video/webm"></video>
     <video id="v_idle" class="on" muted playsinline loop preload="metadata"><source src="assets/v_8131016505.webm" type="video/webm"></video>
@@ -799,13 +801,11 @@ html{overflow-x:clip}
     <div class="kbd">
       <div class="kbd-in">
         <div class="krw">
-          <span class="kc blank"></span>
           <span class="kc tool" style="--c:#0866FF"><img loading="lazy" class="kclogo" src="assets/img_ee0d60e3cd.png" alt="Meta"><span class="sub">Ads</span></span>
           <span class="kc tool" style="--c:#1A73E8"><img loading="lazy" class="kclogo" src="assets/img_8d037a4169.png" alt="Google"><span class="sub">Ads</span></span>
           <span class="kc tool" style="--c:#E8710A"><img loading="lazy" class="kclogo" src="assets/img_7d75d3806e.png" alt="GA4"><span class="sub">Analytics</span></span>
           <span class="kc tool" style="--c:#3B6FE0"><img loading="lazy" class="kclogo" src="assets/img_2656bf39c4.png" alt="GTM"><span class="sub">Tags</span></span>
           <span class="kc tool" style="--c:#20A39E"><img loading="lazy" class="kclogo" src="assets/img_b5f149d959.png" alt="Binotel"><span class="sub">Calls</span></span>
-          <span class="kc blank"></span>
         </div>
         <div class="krw">
           <span class="kc tool" style="--c:#F24E1E"><img loading="lazy" class="kclogo" src="assets/img_2e0e24dbef.png" alt="Figma"><span class="sub">Design</span></span>
@@ -815,12 +815,10 @@ html{overflow-x:clip}
           <span class="kc tool" style="--c:#00A884"><img loading="lazy" class="kclogo" src="assets/img_250b3ad3ad.png" alt="ManyChat"><span class="sub">Bots</span></span>
         </div>
         <div class="krw">
-          <span class="kc blank"></span>
           <span class="kc tool" style="--c:#21759B"><img loading="lazy" class="kclogo" src="assets/img_31bd2ad405.png" alt="WordPress"><span class="sub">Web</span></span>
           <span class="kc tool dark" style="--c:#1d1d1b"><img loading="lazy" class="kclogo" src="assets/img_4155695c8b.png" alt="Notion"><span class="sub">Docs</span></span>
           <span class="kc tool" style="--c:#D97757"><img loading="lazy" class="kclogo" src="assets/img_6f0fc4a17d.png" alt="Claude"><span class="sub">AI</span></span>
           <span class="kc tool" style="--c:#4285F4"><img loading="lazy" class="kclogo" src="assets/img_9500df9666.png" alt="Gemini"><span class="sub">AI</span></span>
-          <span class="kc blank"></span>
         </div>
         <div class="krw">
           <span class="kc mod"><span class="lg">esc</span></span>
@@ -1118,19 +1116,19 @@ document.getElementById('pow').onclick=function(){
 })();
 </script>
 <script>
-/* hero head (mobile): CSS sprite. Idle bob is CSS; mouth plays once when the power-off line appears. */
+/* hero head (mobile): CSS sprite. Idle bob is CSS; on power-off the head lowers and talks the line. */
 (function(){
   var box=document.getElementById('mHeadBox'); if(!box)return;
-  var sub=document.getElementById('heroSub'); if(!sub)return; var t=0;
-  function talkOnce(){ box.classList.remove('talking'); void box.offsetWidth; box.classList.add('talking'); clearTimeout(t); t=setTimeout(function(){ box.classList.remove('talking'); },2000); }
-  try{ var mo=new MutationObserver(function(){ if(sub.classList.contains('on')) talkOnce(); }); mo.observe(sub,{attributes:true,attributeFilter:['class']}); }catch(e){}
+  var sub=document.getElementById('heroSub'); if(!sub)return;
+  function upd(){ var on=sub.classList.contains('on'); box.classList.toggle('talkloop',on); box.classList.toggle('headdrop',on); }
+  try{ var mo=new MutationObserver(upd); mo.observe(sub,{attributes:true,attributeFilter:['class']}); }catch(e){}
 })();
 </script>
 <div id="buddy" class="buddy" aria-hidden="true"><div class="buddy-sub" id="buddySub"></div><div class="buddy-fig" id="buddyFig"><div class="headbox" id="b_headbox"><img class="headstrip" id="b_talk" src="assets/head_sprite.webp" alt="Kostiantyn"></div></div></div><script>
 (function(){
   var buddy=document.getElementById('buddy'),fig=document.getElementById('buddyFig'),sub=document.getElementById('buddySub');
   var talk=document.getElementById('b_talk');
-  var rm=window.matchMedia('(prefers-reduced-motion:reduce)').matches||window.matchMedia('(max-width:640px)').matches;
+  var rm=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
   var LINES={
     contents:"Eight episodes. Zero filler. Popcorn optional.",
     ep1:"I made empty offices the main character.",
@@ -1196,7 +1194,7 @@ document.getElementById('pow').onclick=function(){
   });
 })();
 </script><script>
-(function(){var st=document.getElementById('micStage');if(!st)return;var v=document.getElementById('micVid');function play(){try{if(v){v.muted=true;var p=v.play();if(p&&p.catch)p.catch(function(){});}}catch(e){}}function pause(){try{if(v)v.pause();}catch(e){}}if(!('IntersectionObserver' in window)){st.classList.add('live');play();return;}var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){st.classList.add('live');play();}else{st.classList.remove('live');pause();}});},{threshold:0.35});io.observe(st);})();
+(function(){var st=document.getElementById('micStage');if(!st)return;var v=document.getElementById('micVid');function play(){try{if(v){v.muted=true;var p=v.play();if(p&&p.catch)p.catch(function(){});}}catch(e){}}function pause(){try{if(v)v.pause();}catch(e){}}if(!('IntersectionObserver' in window)){st.classList.add('live');play();return;}var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){st.classList.add('live');play();}else{st.classList.remove('live');pause();}});},{threshold:0.35});io.observe(st);var _tk=false;function _rot(){_tk=false;var r=st.getBoundingClientRect(),vh=window.innerHeight||800;if(r.bottom<-140||r.top>vh+140)return;var mid=r.top+r.height/2,prog=(mid-vh/2)/vh,rot=prog*-34;if(rot>18)rot=18;else if(rot<-18)rot=-18;v.style.setProperty('--microt',rot.toFixed(2)+'deg');}function _osc(){if(!_tk){_tk=true;requestAnimationFrame(_rot);}}window.addEventListener('scroll',_osc,{passive:true});window.addEventListener('resize',_osc,{passive:true});_rot();})();
 </script><script>
 (function(){
   var vids=[].slice.call(document.querySelectorAll('video[data-auto]'));
