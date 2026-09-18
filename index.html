@@ -76,13 +76,13 @@ img{max-width:100%} [hidden]{display:none!important} a{color:inherit}
 .crt-info .b{color:#fff; font-weight:600}
 .crt-info a{color:var(--accent); text-decoration:none}
 .crt-slogan{font-family:var(--f-body); font-weight:700; font-size:clamp(.95rem,1.9vw,1.35rem); color:var(--accent); text-shadow:0 2px 0 rgba(0,0,0,.5); text-align:center; flex:1 1 220px; margin:0}
-.crt-controls{display:flex; flex-direction:column; align-items:flex-end; gap:.5rem}
+.crt-controls{display:flex; flex-direction:column; align-items:flex-end; gap:.5rem; position:relative; z-index:8}
 .tv-ctrls{display:flex; align-items:center; gap:12px; justify-content:flex-end}
-.tvb{width:46px; height:46px; border-radius:50%; border:none; cursor:pointer; display:grid; place-items:center; font-size:1.02rem; color:var(--on-dark); background:radial-gradient(circle at 38% 30%,#494539,#16130c 78%); box-shadow:0 4px 0 #090805, inset 0 1px 0 rgba(255,255,255,.16), inset 0 -4px 8px rgba(0,0,0,.55); transition:transform .1s, box-shadow .1s}
-.tvb:hover{transform:translateY(1px)}
-.tvb:active,.tvb.pressed{transform:translateY(3px); box-shadow:0 1px 0 #090805, inset 0 1px 0 rgba(255,255,255,.16)}
-.tvb.pow{color:#ff6a5e; box-shadow:0 4px 0 #090805, inset 0 0 0 2px rgba(255,106,94,.32), inset 0 1px 0 rgba(255,255,255,.16)}
-.tvb.cat{color:#241c00; background:radial-gradient(circle at 38% 30%,#ffe071,#eeb200); box-shadow:0 4px 0 #b98a00, inset 0 1px 0 rgba(255,255,255,.5)}
+.tvb{width:48px; height:48px; border-radius:50%; border:1px solid rgba(255,255,255,.3); cursor:pointer; display:grid; place-items:center; font-size:1.12rem; color:#fff; background:rgba(255,255,255,.12); -webkit-backdrop-filter:blur(14px) saturate(1.6); backdrop-filter:blur(14px) saturate(1.6); box-shadow:inset 0 1px 0 rgba(255,255,255,.55), inset 0 -10px 16px rgba(0,0,0,.22), 0 8px 22px -8px rgba(0,0,0,.6); transition:transform .12s, box-shadow .12s, background .2s}
+.tvb:hover{transform:translateY(-1px); background:rgba(255,255,255,.18)}
+.tvb:active,.tvb.pressed{transform:translateY(1px); box-shadow:inset 0 1px 0 rgba(255,255,255,.4), inset 0 -3px 8px rgba(0,0,0,.3)}
+.tvb.pow{color:#ff8a7e; border-color:rgba(255,120,110,.55); box-shadow:inset 0 1px 0 rgba(255,255,255,.5), inset 0 0 14px rgba(255,90,80,.22), 0 8px 22px -8px rgba(0,0,0,.6)}
+.tvb.cat{color:#ffe08a; border-color:rgba(255,214,90,.6); background:rgba(255,206,80,.18); box-shadow:inset 0 1px 0 rgba(255,255,255,.5), inset 0 0 14px rgba(255,200,60,.22), 0 8px 22px -8px rgba(0,0,0,.6)}
 .tvb.cat.buzz{animation:catbuzz .4s ease}
 .tvb:focus-visible{outline:3px solid var(--accent); outline-offset:3px}
 @keyframes catbuzz{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
@@ -253,7 +253,7 @@ body.switching .switch-ov .cc{animation:ccshow .62s ease forwards}
 .kc.blank{width:54px} .kc.mod{width:72px; color:#3a382f}
 .kc.space{flex:1 1 auto; max-width:440px; align-items:center; justify-content:center; text-align:center; --c:#ffd84d; color:#241c00}
 .kc.space .lg{font-size:1.05rem} .kc.space .sub{opacity:.85}
-@media (max-width:640px){.kbd-in{transform:rotateX(9deg); gap:8px} .krw{gap:8px} .kc{width:70px; height:54px; padding:6px 8px} .kc .lg{font-size:.8rem} .kc.blank{width:38px} .kc.mod{width:52px}}
+@media (max-width:640px){.kbd{padding:12px} .kbd-in{transform:rotateX(9deg); gap:6px} .krw{gap:6px} .kc{width:16.4vw; height:13vw; min-height:46px; padding:5px 4px} .kc .lg{font-size:.72rem} .kc .sub{font-size:.46rem} .kc.blank{width:8.5vw} .kc.mod{width:12vw; font-size:.6rem} .kc.space{max-width:none}}
 
 /* ---------- EPISODE ---------- */
 .ep .chyron{display:flex; margin-bottom:clamp(22px,3.6vh,40px); max-width:820px}
@@ -390,7 +390,7 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
 .filmstrip .frame.on .logogrid img:nth-child(5){animation-delay:.38s}
 .filmstrip .frame.on .logogrid img:nth-child(6){animation-delay:.46s}
 @keyframes logoPop{to{opacity:1;transform:none}}
-@media (max-width:640px){.kc.tool img.kclogo{width:26px;height:26px}}
+@media (max-width:640px){.kc.tool img.kclogo{width:6.4vw;height:6.4vw;max-width:26px;max-height:26px}}
 
 /* ===== EP.05 media gallery ===== */
 .proof.epgal{padding:8px}
@@ -702,7 +702,7 @@ html{overflow-x:clip}
       <div class="crt-info"><span>Open to remote · hybrid · relocation</span><span id="osd">CH 01 · 00:00:01 · ▶ your showreel</span></div>
       <p class="crt-slogan">Stories that sell, systems that scale.</p>
       <div class="crt-controls">
-        <div class="tv-ctrls" id="ctrls"><button class="tvb pow" id="pow" aria-label="Power">⏻</button><button class="tvb" id="dn" aria-label="Next">▼</button><button class="tvb cat" id="cat" aria-label="Secret">🐱</button></div>
+        <div class="tv-ctrls" id="ctrls"><button class="tvb pow" id="pow" aria-label="Power">⏻</button><button class="tvb" id="dn" aria-label="Next">▼</button><button class="tvb cat" id="cat" aria-label="Peek">👀</button></div>
         
       </div>
     </div>
