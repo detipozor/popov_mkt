@@ -642,8 +642,7 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
 @keyframes headtalk{from{transform:translateX(0)}to{transform:translateX(-97.2222%)}}
 .headbox.talking .headstrip{animation:headtalk 1.9s steps(35) 1 both}
 .headbox.talkloop .headstrip{animation:headtalk 1.9s steps(35) infinite}
-@keyframes headdrop{to{transform:translateY(18%) rotate(-7deg)}}
-.headbox.headdrop{animation:headdrop .7s cubic-bezier(.33,0,.2,1) forwards;transform-origin:50% 58%}
+.headbox.headdrop{animation:none!important;transform:translateY(20%) rotate(-8deg);transition:transform .55s cubic-bezier(.33,0,.2,1);transform-origin:50% 58%}
 @media (prefers-reduced-motion:reduce){.headbox{animation:none}.headbox.talking .headstrip,.headbox.talkloop .headstrip{animation:none}.headbox.headdrop{animation:none;transform:translateY(15%) rotate(-6deg)}}
 @media (max-width:640px){.buddy-fig{filter:drop-shadow(0 5px 9px rgba(0,0,0,.22))}}
 @media (max-width:640px){
@@ -1092,10 +1091,13 @@ document.getElementById('pow').onclick=function(){
   if(catCur){try{catCur.pause();}catch(e){}catCur.classList.remove('on');catCur=null;heroEl.classList.remove('catplaying');}
   clearTimeout(idleTimer); tRZ=tTX=tTY=0; mode='react';
   off=true; crt('off'); setTimeout(dotFlash,360); paint();     // TV goes dark first
-  setTimeout(function(){                                        // once dark, mascot speaks while going sad (mouth opens)
+  var _mh=document.getElementById('mHeadBox');
+  setTimeout(function(){                                        // once dark, mascot speaks while lowering its head
     heroSay(BYE[Math.floor(Math.random()*BYE.length)]);
+    if(_mh){_mh.classList.add('headdrop','talkloop');}
     playThen('sad',function(){
       heroHush();
+      if(_mh){_mh.classList.remove('headdrop','talkloop');}
       off=false; crt('on'); dotFlash(); paint();               // TV powers itself back on
       playThen('happy',function(){ powBusy=false; goIdle(); });
     });
