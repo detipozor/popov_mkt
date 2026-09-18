@@ -644,6 +644,31 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
 }
 /* horizontal overflow safety */
 html{overflow-x:clip}
+
+/* ===== About: podcast mic (studio) ===== */
+.micstudio{position:relative;background:radial-gradient(120% 120% at 50% 32%,#1d2431,#080b10);overflow:hidden}
+.micstudio .micvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;display:block}
+.micstudio .ms-vig{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(120% 86% at 50% 40%,transparent 44%,rgba(6,8,12,.52) 100%)}
+.micstudio .ms-glow{position:absolute;left:50%;top:40%;width:72%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;z-index:1;pointer-events:none;background:radial-gradient(circle,rgba(255,196,0,.15),transparent 62%);opacity:.5;transition:opacity .35s,background .35s;filter:blur(6px)}
+.micstudio.live .ms-glow{opacity:1;background:radial-gradient(circle,rgba(255,59,48,.32),transparent 62%)}
+.micstudio .frametag{z-index:3;color:rgba(255,255,255,.62)}
+.ms-onair{position:absolute;top:12px;right:12px;z-index:3;display:flex;align-items:center;gap:.5em;font-family:var(--f-mono);font-size:.56rem;letter-spacing:.18em;color:#8a8b90;background:rgba(0,0,0,.42);padding:5px 11px;border-radius:999px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);transition:.25s}
+.ms-onair i{width:7px;height:7px;border-radius:50%;background:#8a8b90;transition:.25s}
+.micstudio.live .ms-onair{color:#fff;background:rgba(224,54,44,.92)}
+.micstudio.live .ms-onair i{background:#fff;box-shadow:0 0 8px #fff;animation:onairblink 1s steps(2) infinite}
+.ms-rings{position:absolute;left:50%;top:44%;z-index:2;transform:translate(-50%,-50%);pointer-events:none}
+.ms-ring{position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;border:2px solid rgba(255,196,0,.5)}
+@keyframes msring{0%{transform:scale(.4);opacity:.75}100%{transform:scale(2.7);opacity:0}}
+.ms-hit{position:absolute;inset:0;z-index:4;background:none;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.micstudio .lower3{position:absolute;left:12px;right:12px;bottom:12px;z-index:3}
+.micstudio .lower3 b{background:#6c6a61;transition:.25s}
+.micstudio.live .lower3 b{background:#e0362c;color:#fff}
+/* ---- mobile cassette lift fix (no rise / top-clip in the slider) ---- */
+@media (max-width:760px){
+  .tape-grid{padding-top:14px}
+  .tape-grid>.tape,.tape-grid>.tape:hover,.tape-grid>.tape:focus-visible,.tape-grid>.tape:active{transform:none!important;box-shadow:0 20px 38px -24px rgba(0,0,0,.85)!important}
+  .tape-grid>.tape:focus-visible{box-shadow:0 0 0 2px var(--accent),0 20px 38px -24px rgba(0,0,0,.85)!important}
+}
 </style>
 </head>
 <body>
@@ -758,7 +783,7 @@ html{overflow-x:clip}
         <h2 id="about-h">Story first,<br>system always.</h2>
         <p class="about-p">Full-cycle marketer with roots in <span class="mark">journalism and content</span> — I started out on camera, mic in hand, so story, communication and brand sit at the core of everything I do. I work across strategy, brand, content, PR, offline and B2B partnerships, and build marketing as a system — together with the specialists and contractors who run performance and analytics. I like problems where the resources are tight but the result still has to land.</p>
       </div>
-      <div class="still micstage" id="micStage" aria-label="On air — the mic"><span class="frametag">▶ Podcast · press to go live</span><div class="mic-glow"></div><div class="onair" id="onair"><i></i>ON AIR</div><button class="micbtn" id="micBtn" type="button" aria-label="Go live">🎙️</button><div class="eq"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="lower3"><b>Live</b><span id="micCap">Kostiantyn Popov — reporting</span></div></div>
+      <div class="still micstudio" id="micStage" aria-label="Podcast mic — press to go live"><video class="micvid" id="micVid" muted loop data-auto playsinline preload="none" poster="assets/mic_poster.jpg"><source src="assets/mic.webm" type="video/webm"><source src="assets/mic.mp4" type="video/mp4"></video><div class="ms-vig"></div><div class="ms-glow"></div><span class="frametag">▶ Podcast · press to go live</span><div class="ms-onair" id="onair"><i></i>ON AIR</div><div class="ms-rings" id="msRings" aria-hidden="true"></div><button class="ms-hit" id="micBtn" type="button" aria-label="Go live"></button><div class="lower3"><b id="micTag">Live</b><span id="micCap">Kostiantyn Popov — reporting</span></div></div>
     </div>
   </div>
 </section>
@@ -1167,22 +1192,36 @@ document.getElementById('pow').onclick=function(){
 </script><script>
 (function(){
   var stage=document.getElementById('micStage'); if(!stage)return;
-  var btn=document.getElementById('micBtn'), cap=document.getElementById('micCap');
-  var LINES=["…and we’re live.","Mic check. 1, 2.","Rolling — say the thing.","Story first, always."];
-  var EMO=['🎙️','🔊','🎧','💬','📣'];
+  var hit=document.getElementById('micBtn'), cap=document.getElementById('micCap'),
+      tag=document.getElementById('micTag'), rings=document.getElementById('msRings'),
+      vid=document.getElementById('micVid');
+  var LINES=["…and we’re live.","Story first, always.","Journalist instincts, marketer’s playbook.","Mic on — let’s make something.","Off camera now, still telling stories."];
+  var EMO=['\U0001F399️','\U0001F3A7','\U0001F50A','\U0001F4AC','\U0001F4E3'];
   var t=0, li=0;
-  btn.addEventListener('click',function(){
-    stage.classList.remove('live'); void stage.offsetWidth; stage.classList.add('live');
-    if(cap){cap.textContent=LINES[li%LINES.length]; li++;}
-    var r=btn.getBoundingClientRect(), cx=r.left+r.width/2, cy=r.top+r.height*0.28;
+  function ripple(){ if(!rings)return;
+    for(var i=0;i<3;i++){(function(i){
+      var s=document.createElement('span'); s.className='ms-ring';
+      s.style.animation='msring 1.15s ease-out '+(i*180)+'ms forwards';
+      rings.appendChild(s); setTimeout(function(){s.remove();},1250+i*180);
+    })(i);}
+  }
+  function burst(){
+    var r=stage.getBoundingClientRect(), cx=r.left+r.width/2, cy=r.top+r.height*0.4;
     for(var i=0;i<6;i++){(function(i){
       var s=document.createElement('span'); s.className='moneyfx'; s.textContent=EMO[Math.floor(Math.random()*EMO.length)];
-      var dx=(Math.random()-0.5)*160,rot=(Math.random()-0.5)*60;
+      var dx=(Math.random()-0.5)*150,rot=(Math.random()-0.5)*60;
       s.style.left=cx+'px'; s.style.top=cy+'px'; s.style.setProperty('--dx',dx+'px'); s.style.setProperty('--rot',rot+'deg');
-      s.style.fontSize=(22+Math.random()*16)+'px'; s.style.animationDelay=(i*35)+'ms';
+      s.style.fontSize=(20+Math.random()*16)+'px'; s.style.animationDelay=(i*35)+'ms';
       document.body.appendChild(s); setTimeout(function(){s.remove();},1300+i*35);
     })(i);}
-    clearTimeout(t); t=setTimeout(function(){stage.classList.remove('live'); if(cap)cap.textContent='Kostiantyn Popov — reporting';},2900);
+  }
+  hit.addEventListener('click',function(){
+    stage.classList.remove('live'); void stage.offsetWidth; stage.classList.add('live');
+    if(tag)tag.textContent='On air';
+    if(cap){cap.textContent=LINES[li%LINES.length]; li++;}
+    try{ if(vid&&vid.paused){var p=vid.play(); if(p&&p.catch)p.catch(function(){});} }catch(e){}
+    ripple(); burst();
+    clearTimeout(t); t=setTimeout(function(){ stage.classList.remove('live'); if(tag)tag.textContent='Live'; if(cap)cap.textContent='Kostiantyn Popov — reporting'; },3200);
   });
 })();
 </script><script>
