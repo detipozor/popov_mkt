@@ -643,6 +643,11 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
 .headbox.talking .headstrip{animation:headtalk 1.9s steps(35) 1 both}
 .headbox.talkloop .headstrip{animation:headtalk 1.9s steps(35) infinite}
 .headbox.headdrop{animation:none!important;transform:translateY(20%) rotate(-8deg);transition:transform .55s cubic-bezier(.33,0,.2,1);transform-origin:50% 58%}
+.sadstrip{position:absolute;top:0;left:0;height:100%;width:auto;max-width:none;display:none}
+@keyframes sadplay{from{transform:translateX(0)}to{transform:translateX(-97.2222%)}}
+.headbox.sadmode{animation:none}
+.headbox.sadmode .headstrip{display:none}
+.headbox.sadmode .sadstrip{display:block;animation:sadplay 2.4s steps(35) forwards}
 @media (prefers-reduced-motion:reduce){.headbox{animation:none}.headbox.talking .headstrip,.headbox.talkloop .headstrip{animation:none}.headbox.headdrop{animation:none;transform:translateY(15%) rotate(-6deg)}}
 @media (max-width:640px){.buddy-fig{filter:drop-shadow(0 5px 9px rgba(0,0,0,.22))}}
 @media (max-width:640px){
@@ -682,7 +687,7 @@ html{overflow-x:clip}
 
  <div id="crtdot"></div>
   <div class="mascot-wrap" id="mwrap">
-    <div class="headbox mhead-c" id="mHeadBox"><img class="headstrip" id="mHeadStrip" src="assets/head_sprite.webp" alt="Kostiantyn"></div>
+    <div class="headbox mhead-c" id="mHeadBox"><img class="headstrip" id="mHeadStrip" src="assets/head_sprite.webp" alt="Kostiantyn"><img class="sadstrip" id="mSadStrip" alt="" aria-hidden="true"></div>
     <video id="v_sweep" muted playsinline preload="metadata"><source src="assets/v_5497a98295.webm" type="video/webm"></video>
     <video id="v_idle" class="on" muted playsinline loop preload="metadata"><source src="assets/v_8131016505.webm" type="video/webm"></video>
     <video id="v_look" muted playsinline preload="metadata"><source src="assets/v_b1d2fef44b.webm" type="video/webm"></video>
@@ -1091,16 +1096,26 @@ document.getElementById('pow').onclick=function(){
   if(catCur){try{catCur.pause();}catch(e){}catCur.classList.remove('on');catCur=null;heroEl.classList.remove('catplaying');}
   clearTimeout(idleTimer); tRZ=tTX=tTY=0; mode='react';
   off=true; crt('off'); setTimeout(dotFlash,360); paint();     // TV goes dark first
-  var _mh=document.getElementById('mHeadBox');
-  setTimeout(function(){                                        // once dark, mascot speaks while lowering its head
+  var _mh=document.getElementById('mHeadBox'),_ss=document.getElementById('mSadStrip');
+  setTimeout(function(){                                        // once dark, mascot speaks while going sad
     heroSay(BYE[Math.floor(Math.random()*BYE.length)]);
-    if(_mh){_mh.classList.add('headdrop','talkloop');}
-    playThen('sad',function(){
-      heroHush();
-      if(_mh){_mh.classList.remove('headdrop','talkloop');}
-      off=false; crt('on'); dotFlash(); paint();               // TV powers itself back on
-      playThen('happy',function(){ powBusy=false; goIdle(); });
-    });
+    if(MOB && _mh && _ss){                                      // mobile: play the sad sprite (sad face, head lowers, mouth talks)
+      if(!_ss.getAttribute('src')) _ss.src='assets/sad_sprite.webp';
+      _mh.classList.remove('talkloop','headdrop');
+      _ss.classList.remove('sadplay'); void _ss.offsetWidth; _mh.classList.add('sadmode');
+      setTimeout(function(){
+        heroHush();
+        _mh.classList.remove('sadmode');
+        off=false; crt('on'); dotFlash(); paint();
+        powBusy=false; goIdle();
+      }, 2600);
+    } else {                                                    // desktop: real sad (alpha) video
+      playThen('sad',function(){
+        heroHush();
+        off=false; crt('on'); dotFlash(); paint();
+        playThen('happy',function(){ powBusy=false; goIdle(); });
+      });
+    }
   }, 520);
 };
 
@@ -1118,12 +1133,12 @@ document.getElementById('pow').onclick=function(){
 })();
 </script>
 <script>
-/* hero head (mobile): CSS sprite. Idle bob is CSS; on power-off the head lowers and talks the line. */
+/* hero head (mobile): preload the sad sprite so power-off shows a genuine sad face (iOS can't play the alpha video). */
 (function(){
-  var box=document.getElementById('mHeadBox'); if(!box)return;
-  var sub=document.getElementById('heroSub'); if(!sub)return;
-  function upd(){ var on=sub.classList.contains('on'); box.classList.toggle('talkloop',on); box.classList.toggle('headdrop',on); }
-  try{ var mo=new MutationObserver(upd); mo.observe(sub,{attributes:true,attributeFilter:['class']}); }catch(e){}
+  var ss=document.getElementById('mSadStrip'); if(!ss)return;
+  function pre(){ if(!ss.getAttribute('src')) ss.src='assets/sad_sprite.webp'; }
+  if(document.readyState==='complete') setTimeout(pre,400);
+  else window.addEventListener('load',function(){ setTimeout(pre,400); });
 })();
 </script>
 <div id="buddy" class="buddy" aria-hidden="true"><div class="buddy-sub" id="buddySub"></div><div class="buddy-fig" id="buddyFig"><div class="headbox" id="b_headbox"><img class="headstrip" id="b_talk" src="assets/head_sprite.webp" alt="Kostiantyn"></div></div></div><script>
