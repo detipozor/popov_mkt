@@ -13,7 +13,7 @@
   --bg:#0C0B09; --bg-2:#161510; --bg-3:#201E16;
   --paper:#F3F1EA; --paper-2:#E7E4DA;
   --ink:#141310; --on-dark:#EDEBE4;
-  --muted-d:#9A968A; --muted-l:#6C6A61;
+  --muted-d:#b6b2a6; --muted-l:#6C6A61;
   --accent:#FFC400; --accent-2:#FFD84D; --accent-deep:#C8920A;
   --signal:#FF3B30;
   --line-d:rgba(255,255,255,.14); --line-l:rgba(20,19,15,.16);
@@ -598,6 +598,38 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
 .pw-bs-row figure::after{content:"backstage";position:absolute;left:8px;bottom:8px;font-family:var(--f-mono);font-size:.5rem;letter-spacing:.06em;color:#fff;background:rgba(0,0,0,.55);padding:3px 7px;border-radius:999px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
 .prodwall .sbstrip{margin-top:16px}
 @media (max-width:640px){.pw-bs-row{grid-template-columns:1fr 1fr}}
+
+/* ===== readability + UX pass ===== */
+.beat .v{line-height:1.62}
+.crt-top,.crt-info{font-size:clamp(.62rem,1.05vw,.72rem)}
+.fcap,.reeltag,.crcard .crtag,.bw-mocks figcaption,.epgal figcaption,.sw-h .sw-sub,.pw-bs-row figure::after{font-size:clamp(.62rem,1.4vw,.72rem);letter-spacing:.02em}
+.tape .epn{color:#6b665b}
+.chip{font-size:clamp(.72rem,1.4vw,.8rem)}
+@media (max-width:640px){
+  .beat .v{font-size:1.03rem;line-height:1.64}
+  .ep .chyron .t{font-size:1.16rem}
+  .result .sub,.chip{font-size:.78rem}
+}
+/* cassette: obvious interactivity */
+.tape{cursor:pointer}
+.tape:hover,.tape:focus-visible{transform:translateY(-6px) rotateX(0)!important;box-shadow:0 0 0 2px var(--accent),0 34px 56px -26px rgba(0,0,0,.9)!important}
+.tape .open-badge{position:absolute;z-index:6;top:-8px;left:14px;font-family:var(--f-mono);font-weight:700;font-size:.55rem;letter-spacing:.05em;background:var(--accent);color:#241c00;padding:.28em .62em;border-radius:5px;box-shadow:0 3px 8px rgba(0,0,0,.45);transition:transform .2s}
+.tape:hover .open-badge{transform:translateY(-2px)}
+/* end-of-episode CTAs */
+.ep-cta{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin-top:clamp(22px,3.4vh,38px)}
+.ep-btn{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;padding:.82em 1.5em;border-radius:999px;border:1px solid var(--line-d);background:rgba(255,255,255,.05);color:var(--on-dark);cursor:pointer;text-decoration:none;transition:.18s;-webkit-tap-highlight-color:transparent}
+.ep-btn:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+.ep-btn.pri{background:var(--accent);color:#241c00;border-color:var(--accent)}
+.ep-btn.pri:hover{filter:brightness(1.06);color:#241c00}
+/* mobile cassette slider */
+@media (max-width:760px){
+  .tape-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;padding:4px 2px 16px;-webkit-overflow-scrolling:touch}
+  .tape-grid>.tape{flex:0 0 84%;scroll-snap-align:center;transform:rotateX(0)}
+  .tape-grid::-webkit-scrollbar{height:6px}
+  .tape-grid::-webkit-scrollbar-thumb{background:rgba(255,196,0,.5);border-radius:3px}
+  .folders .lead .swipehint{display:inline-flex}
+}
+.swipehint{display:none;font-family:var(--f-mono);font-size:.62rem;letter-spacing:.1em;color:var(--muted-d);align-items:center;gap:.4em}
 </style>
 </head>
 <body>
@@ -616,9 +648,9 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
   <div class="mascot-wrap" id="mwrap">
     <video id="v_sweep" muted playsinline preload="auto"><source src="assets/v_5497a98295.webm" type="video/webm"></video>
     <video id="v_idle" class="on" muted playsinline loop preload="auto"><source src="assets/v_8131016505.webm" type="video/webm"></video>
-    <video id="v_look" muted playsinline preload="auto"><source src="assets/v_b1d2fef44b.webm" type="video/webm"></video>
-    <video id="v_happy" muted playsinline preload="auto"><source src="assets/v_0e55abb5e4.webm" type="video/webm"></video>
-    <video id="v_sad" muted playsinline preload="auto"><source src="assets/v_c5e2d532c1.webm" type="video/webm"></video>
+    <video id="v_look" muted playsinline preload="metadata"><source src="assets/v_b1d2fef44b.webm" type="video/webm"></video>
+    <video id="v_happy" muted playsinline preload="metadata"><source src="assets/v_0e55abb5e4.webm" type="video/webm"></video>
+    <video id="v_sad" muted playsinline preload="metadata"><source src="assets/v_c5e2d532c1.webm" type="video/webm"></video>
   <div class="hero-sub" id="heroSub"></div>
   </div>
   <div class="crt on">
@@ -732,26 +764,26 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
       <div class="kbd-in">
         <div class="krw">
           <span class="kc blank"></span>
-          <span class="kc tool" style="--c:#0866FF"><img class="kclogo" src="assets/img_ee0d60e3cd.png" alt="Meta"><span class="sub">Ads</span></span>
-          <span class="kc tool" style="--c:#1A73E8"><img class="kclogo" src="assets/img_8d037a4169.png" alt="Google"><span class="sub">Ads</span></span>
-          <span class="kc tool" style="--c:#E8710A"><img class="kclogo" src="assets/img_7d75d3806e.png" alt="GA4"><span class="sub">Analytics</span></span>
-          <span class="kc tool" style="--c:#3B6FE0"><img class="kclogo" src="assets/img_2656bf39c4.png" alt="GTM"><span class="sub">Tags</span></span>
-          <span class="kc tool" style="--c:#20A39E"><img class="kclogo" src="assets/img_b5f149d959.png" alt="Binotel"><span class="sub">Calls</span></span>
+          <span class="kc tool" style="--c:#0866FF"><img loading="lazy" class="kclogo" src="assets/img_ee0d60e3cd.png" alt="Meta"><span class="sub">Ads</span></span>
+          <span class="kc tool" style="--c:#1A73E8"><img loading="lazy" class="kclogo" src="assets/img_8d037a4169.png" alt="Google"><span class="sub">Ads</span></span>
+          <span class="kc tool" style="--c:#E8710A"><img loading="lazy" class="kclogo" src="assets/img_7d75d3806e.png" alt="GA4"><span class="sub">Analytics</span></span>
+          <span class="kc tool" style="--c:#3B6FE0"><img loading="lazy" class="kclogo" src="assets/img_2656bf39c4.png" alt="GTM"><span class="sub">Tags</span></span>
+          <span class="kc tool" style="--c:#20A39E"><img loading="lazy" class="kclogo" src="assets/img_b5f149d959.png" alt="Binotel"><span class="sub">Calls</span></span>
           <span class="kc blank"></span>
         </div>
         <div class="krw">
-          <span class="kc tool" style="--c:#F24E1E"><img class="kclogo" src="assets/img_2e0e24dbef.png" alt="Figma"><span class="sub">Design</span></span>
-          <span class="kc tool" style="--c:#00B4C6"><img class="kclogo" src="assets/img_a3e7b0f288.png" alt="Canva"><span class="sub">Design</span></span>
-          <span class="kc tool" style="--c:#6C5CE7"><img class="kclogo" src="assets/img_1ceddb9dbf.png" alt="Kommo"><span class="sub">CRM</span></span>
-          <span class="kc tool" style="--c:#3457A6"><img class="kclogo" src="assets/img_ee80389912.png" alt="Apollo"><span class="sub">B2B base</span></span>
-          <span class="kc tool" style="--c:#00A884"><img class="kclogo" src="assets/img_250b3ad3ad.png" alt="ManyChat"><span class="sub">Bots</span></span>
+          <span class="kc tool" style="--c:#F24E1E"><img loading="lazy" class="kclogo" src="assets/img_2e0e24dbef.png" alt="Figma"><span class="sub">Design</span></span>
+          <span class="kc tool" style="--c:#00B4C6"><img loading="lazy" class="kclogo" src="assets/img_a3e7b0f288.png" alt="Canva"><span class="sub">Design</span></span>
+          <span class="kc tool" style="--c:#6C5CE7"><img loading="lazy" class="kclogo" src="assets/img_1ceddb9dbf.png" alt="Kommo"><span class="sub">CRM</span></span>
+          <span class="kc tool" style="--c:#3457A6"><img loading="lazy" class="kclogo" src="assets/img_ee80389912.png" alt="Apollo"><span class="sub">B2B base</span></span>
+          <span class="kc tool" style="--c:#00A884"><img loading="lazy" class="kclogo" src="assets/img_250b3ad3ad.png" alt="ManyChat"><span class="sub">Bots</span></span>
         </div>
         <div class="krw">
           <span class="kc blank"></span>
-          <span class="kc tool" style="--c:#21759B"><img class="kclogo" src="assets/img_31bd2ad405.png" alt="WordPress"><span class="sub">Web</span></span>
-          <span class="kc tool dark" style="--c:#1d1d1b"><img class="kclogo" src="assets/img_4155695c8b.png" alt="Notion"><span class="sub">Docs</span></span>
-          <span class="kc tool" style="--c:#D97757"><img class="kclogo" src="assets/img_6f0fc4a17d.png" alt="Claude"><span class="sub">AI</span></span>
-          <span class="kc tool" style="--c:#4285F4"><img class="kclogo" src="assets/img_9500df9666.png" alt="Gemini"><span class="sub">AI</span></span>
+          <span class="kc tool" style="--c:#21759B"><img loading="lazy" class="kclogo" src="assets/img_31bd2ad405.png" alt="WordPress"><span class="sub">Web</span></span>
+          <span class="kc tool dark" style="--c:#1d1d1b"><img loading="lazy" class="kclogo" src="assets/img_4155695c8b.png" alt="Notion"><span class="sub">Docs</span></span>
+          <span class="kc tool" style="--c:#D97757"><img loading="lazy" class="kclogo" src="assets/img_6f0fc4a17d.png" alt="Claude"><span class="sub">AI</span></span>
+          <span class="kc tool" style="--c:#4285F4"><img loading="lazy" class="kclogo" src="assets/img_9500df9666.png" alt="Gemini"><span class="sub">AI</span></span>
           <span class="kc blank"></span>
         </div>
         <div class="krw">
@@ -776,13 +808,13 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
         <div class="beat"><span class="k">Result</span><p class="v">Seven major chains signed, plus small businesses — and price per m² rose from $900 to $1,250 in about six months.</p></div>
       </div>
       <aside class="ep-side">
-        <div class="epmasc"><span class="av"><img src="assets/img_a760d057ec.png" alt=""></span><span class="cap"><b>the deal-maker</b></span></div>
+        <div class="epmasc"><span class="av"><img loading="lazy" src="assets/img_a760d057ec.png" alt=""></span><span class="cap"><b>the deal-maker</b></span></div>
         <div class="result glass"><span class="k">Price per m²</span><div class="big">$900→1,250</div><span class="sub">+ 7 anchor chains · ~6 months</span></div>
-        <div class="chips"><span class="chip logo"><img class="chiplogo" src="assets/img_c3bab274ce.png" alt="">Nova Post</span><span class="chip logo"><img class="chiplogo" src="assets/img_26e82a0bad.png" alt="">Rozetka</span><span class="chip logo"><img class="chiplogo" src="assets/img_4c7404c553.png" alt="">GBar</span><span class="chip logo"><img class="chiplogo" src="assets/img_6c1ea9066f.png" alt="">ATB</span><span class="chip logo"><img class="chiplogo" src="assets/img_987100ebda.png" alt="">Silpo</span><span class="chip logo"><img class="chiplogo" src="assets/img_382285aa18.png" alt="">PrivatBank</span></div>
-        <div class="filmstrip" aria-label="Sequence"><span class="fbadge">sequence ▸</span><div class="frame"><img src="assets/img_0eb190b8b7.jpg" alt=""><span class="fcap">Aerial · masterplan</span></div><div class="frame logostile"><div class="logogrid"><img src="assets/img_c3bab274ce.png" alt=""><img src="assets/img_26e82a0bad.png" alt=""><img src="assets/img_4c7404c553.png" alt=""><img src="assets/img_6c1ea9066f.png" alt=""><img src="assets/img_987100ebda.png" alt=""><img src="assets/img_382285aa18.png" alt=""></div><span class="fcap">2 · Brand logos tiling in</span></div><div class="frame"><img src="assets/img_7564662b9c.jpg" alt=""><span class="fcap">The complex · street view</span></div><div class="fdots"><span class="fdot"></span><span class="fdot"></span><span class="fdot"></span></div></div>
+        <div class="chips"><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_c3bab274ce.png" alt="">Nova Post</span><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_26e82a0bad.png" alt="">Rozetka</span><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_4c7404c553.png" alt="">GBar</span><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_6c1ea9066f.png" alt="">ATB</span><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_987100ebda.png" alt="">Silpo</span><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_382285aa18.png" alt="">PrivatBank</span></div>
+        <div class="filmstrip" aria-label="Sequence"><span class="fbadge">sequence ▸</span><div class="frame"><img loading="lazy" src="assets/img_0eb190b8b7.jpg" alt=""><span class="fcap">Aerial · masterplan</span></div><div class="frame logostile"><div class="logogrid"><img loading="lazy" src="assets/img_c3bab274ce.png" alt=""><img loading="lazy" src="assets/img_26e82a0bad.png" alt=""><img loading="lazy" src="assets/img_4c7404c553.png" alt=""><img loading="lazy" src="assets/img_6c1ea9066f.png" alt=""><img loading="lazy" src="assets/img_987100ebda.png" alt=""><img loading="lazy" src="assets/img_382285aa18.png" alt=""></div><span class="fcap">2 · Brand logos tiling in</span></div><div class="frame"><img loading="lazy" src="assets/img_7564662b9c.jpg" alt=""><span class="fcap">The complex · street view</span></div><div class="fdots"><span class="fdot"></span><span class="fdot"></span><span class="fdot"></span></div></div>
       </aside>
     </div>
-    <div class="orbitwrap" aria-label="Anchor tenants orbiting the project"><div class="orbit-h"><span>▶ Anchor tenants orbiting the project</span><span class="orbit-sub">7 chains signed · price/m² $900 → $1,250</span></div><div class="orbit"><svg class="orbit-web" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="rgba(255,196,0,.18)" stroke-width="0.35" stroke-dasharray="1.4 1.6"><circle cx="50" cy="50" r="46"/><circle cx="50" cy="50" r="32.5"/><circle cx="50" cy="50" r="19"/></g><g stroke="rgba(255,196,0,.09)" stroke-width="0.3"><line x1="50" y1="3" x2="50" y2="97"/><line x1="3" y1="50" x2="97" y2="50"/><line x1="16" y1="16" x2="84" y2="84"/><line x1="84" y1="16" x2="16" y2="84"/></g></svg><div class="orbit-core"><img src="assets/img_7564662b9c.jpg" alt="The complex"><span class="orbit-core-tag">the complex</span></div><div class="ring r1"><span class="planet" style="--a:0deg"><span class="pf"><span class="pl"><img src="assets/img_c3bab274ce.png" alt="Nova Post" loading="lazy"></span></span></span><span class="planet" style="--a:120deg"><span class="pf"><span class="pl"><img src="assets/img_6c1ea9066f.png" alt="ATB" loading="lazy"></span></span></span><span class="planet" style="--a:240deg"><span class="pf"><span class="pl"><img src="assets/img_987100ebda.png" alt="Silpo" loading="lazy"></span></span></span></div><div class="ring r2"><span class="planet" style="--a:60deg"><span class="pf"><span class="pl"><img src="assets/img_26e82a0bad.png" alt="Rozetka" loading="lazy"></span></span></span><span class="planet" style="--a:180deg"><span class="pf"><span class="pl"><img src="assets/img_4c7404c553.png" alt="GBar" loading="lazy"></span></span></span><span class="planet" style="--a:300deg"><span class="pf"><span class="pl"><img src="assets/img_382285aa18.png" alt="PrivatBank" loading="lazy"></span></span></span></div></div></div><div class="principle"><p class="subtitle">The right tenants raise the value of the whole project — not just fill space.</p></div>
+    <div class="orbitwrap" aria-label="Anchor tenants orbiting the project"><div class="orbit-h"><span>▶ Anchor tenants orbiting the project</span><span class="orbit-sub">7 chains signed · price/m² $900 → $1,250</span></div><div class="orbit"><svg class="orbit-web" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="rgba(255,196,0,.18)" stroke-width="0.35" stroke-dasharray="1.4 1.6"><circle cx="50" cy="50" r="46"/><circle cx="50" cy="50" r="32.5"/><circle cx="50" cy="50" r="19"/></g><g stroke="rgba(255,196,0,.09)" stroke-width="0.3"><line x1="50" y1="3" x2="50" y2="97"/><line x1="3" y1="50" x2="97" y2="50"/><line x1="16" y1="16" x2="84" y2="84"/><line x1="84" y1="16" x2="16" y2="84"/></g></svg><div class="orbit-core"><img loading="lazy" src="assets/img_7564662b9c.jpg" alt="The complex"><span class="orbit-core-tag">the complex</span></div><div class="ring r1"><span class="planet" style="--a:0deg"><span class="pf"><span class="pl"><img src="assets/img_c3bab274ce.png" alt="Nova Post" loading="lazy"></span></span></span><span class="planet" style="--a:120deg"><span class="pf"><span class="pl"><img src="assets/img_6c1ea9066f.png" alt="ATB" loading="lazy"></span></span></span><span class="planet" style="--a:240deg"><span class="pf"><span class="pl"><img src="assets/img_987100ebda.png" alt="Silpo" loading="lazy"></span></span></span></div><div class="ring r2"><span class="planet" style="--a:60deg"><span class="pf"><span class="pl"><img src="assets/img_26e82a0bad.png" alt="Rozetka" loading="lazy"></span></span></span><span class="planet" style="--a:180deg"><span class="pf"><span class="pl"><img src="assets/img_4c7404c553.png" alt="GBar" loading="lazy"></span></span></span><span class="planet" style="--a:300deg"><span class="pf"><span class="pl"><img src="assets/img_382285aa18.png" alt="PrivatBank" loading="lazy"></span></span></span></div></div></div><div class="principle"><p class="subtitle">The right tenants raise the value of the whole project — not just fill space.</p></div>
   </div>
 </section>
 
@@ -798,7 +830,7 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
         <div class="beat"><span class="k">Result</span><p class="v">~1,200–1,400 leads/month at a $6.5–$20 CPL depending on the project — the whole funnel on instruments.</p></div>
       </div>
       <aside class="ep-side">
-        <div class="epmasc"><span class="av"><img src="assets/img_1b92313df3.png" alt=""></span><span class="cap"><b>the operator</b></span></div>
+        <div class="epmasc"><span class="av"><img loading="lazy" src="assets/img_1b92313df3.png" alt=""></span><span class="cap"><b>the operator</b></span></div>
         <div class="result glass"><span class="k">Leads / month</span><div class="big">1.2–1.4k</div><span class="sub">full-funnel tracking</span></div>
         <div class="cplchart" aria-label="Cost per lead by segment">
           <div class="cplhead">Cost per lead · by segment</div>
@@ -808,11 +840,11 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
             <div class="bar"><span class="v">$20</span><span class="col" data-h="150px"></span><span class="lb">Business</span></div>
           </div>
         </div>
-        <div class="chips"><span class="chip logo"><img class="chiplogo" src="assets/img_ee0d60e3cd.png" alt="">Meta</span><span class="chip logo"><img class="chiplogo" src="assets/img_8d037a4169.png" alt="">Google</span><span class="chip logo"><img class="chiplogo" src="assets/img_7d75d3806e.png" alt="">GA4</span><span class="chip logo"><img class="chiplogo" src="assets/img_2656bf39c4.png" alt="">GTM</span><span class="chip logo"><img class="chiplogo" src="assets/img_b5f149d959.png" alt="">Binotel</span></div>
+        <div class="chips"><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_ee0d60e3cd.png" alt="">Meta</span><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_8d037a4169.png" alt="">Google</span><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_7d75d3806e.png" alt="">GA4</span><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_2656bf39c4.png" alt="">GTM</span><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_b5f149d959.png" alt="">Binotel</span></div>
         <div class="ep2mini"><figure><img src="assets/ep2_mini_a.jpg" alt="ParkWill ad creative" loading="lazy"><figcaption>ParkWill</figcaption></figure><figure><img src="assets/ep2_mini_b.jpg" alt="PIONERSKIY ad creative" loading="lazy"><figcaption>PIONERSKIY</figcaption></figure><span class="ep2mini-tag">9 concepts · 2 brands · feed / stories / reels</span></div>
       </aside>
     </div>
-    <div class="crwall" aria-label="Ad creatives that ran"><div class="crwall-vp"><div class="crwall-track"><div class="crcard"><img src="assets/ep2_ad1.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><img src="assets/ep2_ad2.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><video autoplay muted loop playsinline preload="metadata"><source src="assets/ep2_reel2.webm" type="video/webm"><source src="assets/ep2_reel2.mp4" type="video/mp4"></video><span class="crtag">▶ reel</span></div><div class="crcard"><img src="assets/ep2_ad3.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><img src="assets/ep2_ad4.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><img src="assets/ep2_ad5.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><video autoplay muted loop playsinline preload="metadata"><source src="assets/ep2_reel1.webm" type="video/webm"><source src="assets/ep2_reel1.mp4" type="video/mp4"></video><span class="crtag">▶ reel</span></div><div class="crcard"><img src="assets/ep2_ad6.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><img src="assets/ep2_ad7.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><img src="assets/ep2_ad8.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><img src="assets/ep2_ad9.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><img src="assets/ep2_ad1.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><img src="assets/ep2_ad2.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><video autoplay muted loop playsinline preload="metadata"><source src="assets/ep2_reel2.webm" type="video/webm"><source src="assets/ep2_reel2.mp4" type="video/mp4"></video><span class="crtag">▶ reel</span></div><div class="crcard"><img src="assets/ep2_ad3.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><img src="assets/ep2_ad4.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><img src="assets/ep2_ad5.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><video autoplay muted loop playsinline preload="metadata"><source src="assets/ep2_reel1.webm" type="video/webm"><source src="assets/ep2_reel1.mp4" type="video/mp4"></video><span class="crtag">▶ reel</span></div><div class="crcard"><img src="assets/ep2_ad6.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><img src="assets/ep2_ad7.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><img src="assets/ep2_ad8.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><img src="assets/ep2_ad9.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div></div></div></div><div class="principle"><p class="subtitle">A system and analytics beat manually working the ad account.</p></div>
+    <div class="crwall" aria-label="Ad creatives that ran"><div class="crwall-vp"><div class="crwall-track"><div class="crcard"><img src="assets/ep2_ad1.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><img src="assets/ep2_ad2.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><video data-auto muted loop playsinline preload="none" poster="assets/ep2_reel2_p.jpg"><source src="assets/ep2_reel2.webm" type="video/webm"><source src="assets/ep2_reel2.mp4" type="video/mp4"></video><span class="crtag">▶ reel</span></div><div class="crcard"><img src="assets/ep2_ad3.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><img src="assets/ep2_ad4.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><img src="assets/ep2_ad5.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><video data-auto muted loop playsinline preload="none" poster="assets/ep2_reel1_p.jpg"><source src="assets/ep2_reel1.webm" type="video/webm"><source src="assets/ep2_reel1.mp4" type="video/mp4"></video><span class="crtag">▶ reel</span></div><div class="crcard"><img src="assets/ep2_ad6.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><img src="assets/ep2_ad7.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><img src="assets/ep2_ad8.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><img src="assets/ep2_ad9.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><img src="assets/ep2_ad1.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><img src="assets/ep2_ad2.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><video data-auto muted loop playsinline preload="none" poster="assets/ep2_reel2_p.jpg"><source src="assets/ep2_reel2.webm" type="video/webm"><source src="assets/ep2_reel2.mp4" type="video/mp4"></video><span class="crtag">▶ reel</span></div><div class="crcard"><img src="assets/ep2_ad3.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><img src="assets/ep2_ad4.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><img src="assets/ep2_ad5.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><video data-auto muted loop playsinline preload="none" poster="assets/ep2_reel1_p.jpg"><source src="assets/ep2_reel1.webm" type="video/webm"><source src="assets/ep2_reel1.mp4" type="video/mp4"></video><span class="crtag">▶ reel</span></div><div class="crcard"><img src="assets/ep2_ad6.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><img src="assets/ep2_ad7.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><img src="assets/ep2_ad8.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><img src="assets/ep2_ad9.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div></div></div></div><div class="principle"><p class="subtitle">A system and analytics beat manually working the ad account.</p></div>
   </div>
 </section>
 
@@ -828,10 +860,10 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
         <div class="beat"><span class="k">Result</span><p class="v">One campaign on ~$100 spend brought ~$50,000 in sales — <b>ROMI ≈500×</b> — then kept as a recurring low-cost channel.</p></div>
       </div>
       <aside class="ep-side">
-        <div class="epmasc"><span class="av"><img src="assets/img_0c13749c6a.png" alt=""></span><span class="cap"><b>the closer</b></span></div>
+        <div class="epmasc"><span class="av"><img loading="lazy" src="assets/img_0c13749c6a.png" alt=""></span><span class="cap"><b>the closer</b></span></div>
         <div class="result glass"><span class="k">ROMI</span><div class="big">≈500×</div><span class="sub">~$50,000 on ~$100 spend</span></div>
         <div class="chips"><span class="chip">SMS</span><span class="chip">Lifecycle</span><span class="chip">Retargeting</span></div>
-        <div class="filmstrip" aria-label="Sequence"><span class="fbadge">sequence ▸</span><div class="frame"><img src="assets/img_5bb655b5d6.jpg" alt=""><span class="fcap">The complex · facade</span></div><div class="frame vidframe"><video muted loop autoplay playsinline preload="metadata"><source src="assets/v_c75daa67fe.webm" type="video/webm"><source src="assets/v_62788f18f8.mp4" type="video/mp4"></video><span class="fcap">Our SMS · the offer</span></div><div class="frame"><img src="assets/img_4a7f73c947.jpg" alt=""><span class="fcap">Storage & parking</span></div><div class="fdots"><span class="fdot"></span><span class="fdot"></span><span class="fdot"></span></div></div>
+        <div class="filmstrip" aria-label="Sequence"><span class="fbadge">sequence ▸</span><div class="frame"><img loading="lazy" src="assets/img_5bb655b5d6.jpg" alt=""><span class="fcap">The complex · facade</span></div><div class="frame vidframe"><video muted loop data-auto playsinline preload="none" poster="assets/v_62788f18f8_p.jpg"><source src="assets/v_c75daa67fe.webm" type="video/webm"><source src="assets/v_62788f18f8.mp4" type="video/mp4"></video><span class="fcap">Our SMS · the offer</span></div><div class="frame"><img loading="lazy" src="assets/img_4a7f73c947.jpg" alt=""><span class="fcap">Storage & parking</span></div><div class="fdots"><span class="fdot"></span><span class="fdot"></span><span class="fdot"></span></div></div>
       </aside>
     </div>
     <div class="principle"><p class="subtitle">A cheap channel on a warm base beats expensive traffic.</p></div>
@@ -850,7 +882,7 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
         <div class="beat"><span class="k">Result</span><p class="v">A coherent brand with clear positioning, more trust and recognition, one visual language across materials, and clean results in search and AI.</p></div>
       </div>
       <aside class="ep-side">
-        <div class="epmasc"><span class="av"><img src="assets/img_0f2b6f8674.png" alt=""></span><span class="cap"><b>the brand guy</b></span></div>
+        <div class="epmasc"><span class="av"><img loading="lazy" src="assets/img_0f2b6f8674.png" alt=""></span><span class="cap"><b>the brand guy</b></span></div>
         <div class="result glass"><span class="k">Brand</span><div class="big">Before→After</div><span class="sub">identity · brandbook · 5-mo SERM</span></div>
         <div class="chips"><span class="chip">Dobrograd</span><span class="chip">Iron Invest</span><span class="chip">SERM</span></div>
         <div class="ep6sites serm"><div class="serm-h">SERM · reputation in search &amp; AI</div><span class="sm-row"><span class="sm-dot"></span><b>DIM.RIA rating</b><em>100%</em></span><span class="sm-row"><span class="sm-dot"></span><b>On the market</b><em>15 years · est. 2011</em></span><span class="sm-row"><span class="sm-dot"></span><b>Delivered</b><em>41 buildings</em></span><span class="sm-row"><span class="sm-dot"></span><b>Problematic objects</b><em>0</em></span><span class="sm-row"><span class="sm-dot"></span><b>Award</b><em>Best Enterprise UA 2020</em></span><span class="serm-src">DIM.RIA · LUN · nerukhomi.ua</span></div></aside>
@@ -871,10 +903,10 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
         <div class="beat"><span class="k">Result</span><p class="v">Contributed to ~+10% growth in unit sales and a clear lift in project awareness.</p></div>
       </div>
       <aside class="ep-side">
-        <div class="epmasc"><span class="av"><img src="assets/img_5e12efde7b.png" alt=""></span><span class="cap"><b>the host</b></span></div>
+        <div class="epmasc"><span class="av"><img loading="lazy" src="assets/img_5e12efde7b.png" alt=""></span><span class="cap"><b>the host</b></span></div>
         <div class="result glass"><span class="k">Unit sales</span><div class="big">+10%</div><span class="sub">awareness + community &amp; partner events</span></div>
         <div class="chips"><span class="chip">Billboards</span><span class="chip">Screens</span><span class="chip">Events</span></div>
-        <div class="proof epgal"><div class="epgal-grid"><figure><video muted loop autoplay playsinline preload="metadata"><source src="assets/v_1a3dd8c771.webm" type="video/webm"><source src="assets/v_c7f9fc92d5.mp4" type="video/mp4"></video><figcaption>Archotel Avenue · 5★ Odesa</figcaption></figure><figure><video muted loop autoplay playsinline preload="metadata"><source src="assets/v_776643d0a6.webm" type="video/webm"><source src="assets/v_1f6ca928e5.mp4" type="video/mp4"></video><figcaption>«Чуєш море кличе?»</figcaption></figure><figure><video muted loop autoplay playsinline preload="metadata"><source src="assets/v_59c5eaddbb.webm" type="video/webm"><source src="assets/v_9c559fd4d5.mp4" type="video/mp4"></video><figcaption>Arkadia · lifestyle</figcaption></figure><figure><video muted loop autoplay playsinline preload="metadata"><source src="assets/v_656aa5b99a.webm" type="video/webm"><source src="assets/v_d5f2479199.mp4" type="video/mp4"></video><figcaption>Night billboard · Gulliver</figcaption></figure></div></div>
+        <div class="proof epgal"><div class="epgal-grid"><figure><video muted loop data-auto playsinline preload="none" poster="assets/v_c7f9fc92d5_p.jpg"><source src="assets/v_1a3dd8c771.webm" type="video/webm"><source src="assets/v_c7f9fc92d5.mp4" type="video/mp4"></video><figcaption>Archotel Avenue · 5★ Odesa</figcaption></figure><figure><video muted loop data-auto playsinline preload="none" poster="assets/v_1f6ca928e5_p.jpg"><source src="assets/v_776643d0a6.webm" type="video/webm"><source src="assets/v_1f6ca928e5.mp4" type="video/mp4"></video><figcaption>«Чуєш море кличе?»</figcaption></figure><figure><video muted loop data-auto playsinline preload="none" poster="assets/v_9c559fd4d5_p.jpg"><source src="assets/v_59c5eaddbb.webm" type="video/webm"><source src="assets/v_9c559fd4d5.mp4" type="video/mp4"></video><figcaption>Arkadia · lifestyle</figcaption></figure><figure><video muted loop data-auto playsinline preload="none" poster="assets/v_d5f2479199_p.jpg"><source src="assets/v_656aa5b99a.webm" type="video/webm"><source src="assets/v_d5f2479199.mp4" type="video/mp4"></video><figcaption>Night billboard · Gulliver</figcaption></figure></div></div>
       </aside>
     </div>
     <div class="principle"><p class="subtitle">Offline and live events still move sales when they hit the right audience.</p></div>
@@ -893,13 +925,13 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
         <div class="beat"><span class="k">Result</span><p class="v">Saved ~$2,000 on landing development; fast landings for every campaign; the main site under control; data collected from the first click.</p></div>
       </div>
       <aside class="ep-side">
-        <div class="epmasc"><span class="av"><img src="assets/img_1b92313df3.png" alt=""></span><span class="cap"><b>the builder</b></span></div>
+        <div class="epmasc"><span class="av"><img loading="lazy" src="assets/img_1b92313df3.png" alt=""></span><span class="cap"><b>the builder</b></span></div>
         <div class="result glass"><span class="k">Dev saved</span><div class="big">−$2,000</div><span class="sub">landings by hand · analytics day 1</span></div>
-        <div class="chips"><span class="chip logo"><img class="chiplogo" src="assets/img_9db1069a1f.png" alt="">Google AI Studio</span><span class="chip logo"><img class="chiplogo" src="assets/img_31bd2ad405.png" alt="">WordPress</span><span class="chip logo"><img class="chiplogo" src="assets/img_7d75d3806e.png" alt="">GA4</span></div>
+        <div class="chips"><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_9db1069a1f.png" alt="">Google AI Studio</span><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_31bd2ad405.png" alt="">WordPress</span><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_7d75d3806e.png" alt="">GA4</span></div>
         <div class="ep6sites"><span class="sm-row"><span class="sm-dot"></span><b>Pionerskiy 2</b><em>landing · by hand</em></span><span class="sm-row"><span class="sm-dot"></span><b>Pionerskiy Business</b><em>landing · by hand</em></span><span class="sm-row"><span class="sm-dot"></span><b>Dobrograd</b><em>corporate site · directed</em></span></div>
       </aside>
     </div>
-    <div class="sitewall" aria-label="Sites and landings shipped"><div class="sw-h"><span>▶ Sites &amp; landings shipped</span><span class="sw-sub">2 landings by hand · 1 corporate site directed</span></div><figure class="browser wide"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">dobrograd.ua</span><span class="swtag">directed build · WordPress</span></div><video autoplay muted loop playsinline preload="metadata"><source src="assets/ep6_dobro.webm" type="video/webm"><source src="assets/ep6_dobro.mp4" type="video/mp4"></video><figcaption>Dobrograd — developer’s main site · brief, contractor control, analytics from day one</figcaption></figure><div class="sw-landings"><figure class="browser"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">pionerskiy2.com.ua</span></div><div class="shot"><img src="assets/ep6_land_pio.jpg" alt="Pionerskiy 2 landing page" loading="lazy"></div><figcaption>Pionerskiy 2 · project landing (built by hand)</figcaption></figure><figure class="browser"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">buisness.pionerskiy.com.ua</span></div><div class="shot"><img src="assets/ep6_land_biz.jpg" alt="Pionerskiy Business landing page" loading="lazy"></div><figcaption>Pionerskiy Business · commercial landing (built by hand)</figcaption></figure></div></div><div class="principle"><p class="subtitle">Build by hand where it's fast and cheap; direct a contractor where scale is needed.</p></div>
+    <div class="sitewall" aria-label="Sites and landings shipped"><div class="sw-h"><span>▶ Sites &amp; landings shipped</span><span class="sw-sub">2 landings by hand · 1 corporate site directed</span></div><figure class="browser wide"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">dobrograd.ua</span><span class="swtag">directed build · WordPress</span></div><video data-auto muted loop playsinline preload="none" poster="assets/ep6_dobro_p.jpg"><source src="assets/ep6_dobro.mp4" type="video/mp4"></video><figcaption>Dobrograd — developer’s main site · brief, contractor control, analytics from day one</figcaption></figure><div class="sw-landings"><figure class="browser"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">pionerskiy2.com.ua</span></div><div class="shot"><img src="assets/ep6_land_pio.jpg" alt="Pionerskiy 2 landing page" loading="lazy"></div><figcaption>Pionerskiy 2 · project landing (built by hand)</figcaption></figure><figure class="browser"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">buisness.pionerskiy.com.ua</span></div><div class="shot"><img src="assets/ep6_land_biz.jpg" alt="Pionerskiy Business landing page" loading="lazy"></div><figcaption>Pionerskiy Business · commercial landing (built by hand)</figcaption></figure></div></div><div class="principle"><p class="subtitle">Build by hand where it's fast and cheap; direct a contractor where scale is needed.</p></div>
   </div>
 </section>
 
@@ -915,13 +947,13 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
         <div class="beat"><span class="k">Result</span><p class="v">Videos grew from ~800–1,000 to 30,000–40,000 organic views; influencer marketing at ~20% lower CPA ($120/deal); Instagram 5k→14k plus a second profile 0→10k; the ManyChat I implemented grew into two new departments (lead-gen and chatbots).</p></div>
       </div>
       <aside class="ep-side">
-        <div class="epmasc"><span class="av"><img src="assets/img_69ef5e4a50.png" alt=""></span><span class="cap"><b>the showrunner</b></span></div>
+        <div class="epmasc"><span class="av"><img loading="lazy" src="assets/img_69ef5e4a50.png" alt=""></span><span class="cap"><b>the showrunner</b></span></div>
         <div class="result glass"><span class="k">YouTube views / video</span><div class="big">800→40k</div><span class="sub">IG 5k→14k · CPA −20%</span></div>
-        <div class="chips"><span class="chip">YouTube</span><span class="chip logo"><img class="chiplogo" src="assets/img_250b3ad3ad.png" alt="">ManyChat</span><span class="chip">Influencers</span></div>
+        <div class="chips"><span class="chip">YouTube</span><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_250b3ad3ad.png" alt="">ManyChat</span><span class="chip">Influencers</span></div>
         <div class="ep6sites"><span class="sm-row"><span class="sm-dot"></span><b>Before</b><em>~800 views / video</em></span><span class="sm-row"><span class="sm-dot"></span><b>After</b><em>30–40k views / video</em></span><span class="sm-row"><span class="sm-dot"></span><b>Instagram</b><em>5k → 14k · +0 → 10k</em></span></div>
       </aside>
     </div>
-    <div class="ep7ba" aria-label="Channel views before and after"><div class="ep7ba-h"><span>▶ Same channel · before → after</span><span class="ep7ba-sub">organic views per video</span></div><figure class="ep7ba-row"><span class="ep7ba-tag">BEFORE · ~800 views</span><img src="assets/ep7_before.jpg" alt="Old videos around 800 views" loading="lazy"></figure><div class="ep7ba-mid"><span>stopped advertising ourselves → honest, wide topics</span><span class="ep7ba-jump">≈ ×40 views</span></div><figure class="ep7ba-row hot"><span class="ep7ba-tag on">AFTER · 30–40k views</span><img src="assets/ep7_after.jpg" alt="New videos at 30-40k views" loading="lazy"></figure><div class="ep7clips"><figure class="ytclip"><video autoplay muted loop playsinline preload="metadata"><source src="assets/ep7_clip1.webm" type="video/webm"><source src="assets/ep7_clip1.mp4" type="video/mp4"></video><figcaption>▶ Honest review · Honda CR-V</figcaption></figure><figure class="ytclip"><video autoplay muted loop playsinline preload="metadata"><source src="assets/ep7_clip2.webm" type="video/webm"><source src="assets/ep7_clip2.mp4" type="video/mp4"></video><figcaption>▶ The car, up close</figcaption></figure></div></div><div class="principle"><p class="subtitle">Honesty and wide topics travel further than self-promotion.</p></div>
+    <div class="ep7ba" aria-label="Channel views before and after"><div class="ep7ba-h"><span>▶ Same channel · before → after</span><span class="ep7ba-sub">organic views per video</span></div><figure class="ep7ba-row"><span class="ep7ba-tag">BEFORE · ~800 views</span><img src="assets/ep7_before.jpg" alt="Old videos around 800 views" loading="lazy"></figure><div class="ep7ba-mid"><span>stopped advertising ourselves → honest, wide topics</span><span class="ep7ba-jump">≈ ×40 views</span></div><figure class="ep7ba-row hot"><span class="ep7ba-tag on">AFTER · 30–40k views</span><img src="assets/ep7_after.jpg" alt="New videos at 30-40k views" loading="lazy"></figure><div class="ep7clips"><figure class="ytclip"><video data-auto muted loop playsinline preload="none" poster="assets/ep7_clip1_p.jpg"><source src="assets/ep7_clip1.webm" type="video/webm"><source src="assets/ep7_clip1.mp4" type="video/mp4"></video><figcaption>▶ Honest review · Honda CR-V</figcaption></figure><figure class="ytclip"><video data-auto muted loop playsinline preload="none" poster="assets/ep7_clip2_p.jpg"><source src="assets/ep7_clip2.webm" type="video/webm"><source src="assets/ep7_clip2.mp4" type="video/mp4"></video><figcaption>▶ The car, up close</figcaption></figure></div></div><div class="principle"><p class="subtitle">Honesty and wide topics travel further than self-promotion.</p></div>
   </div>
 </section>
 
@@ -937,13 +969,13 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
         <div class="beat"><span class="k">Result</span><p class="v">A brand film that carried the company's 15-year story and strengthened image and trust around the anniversary.</p></div>
       </div>
       <aside class="ep-side">
-        <div class="epmasc"><span class="av"><img src="assets/img_668aca12d7.png" alt=""></span><span class="cap"><b>the director</b></span></div>
+        <div class="epmasc"><span class="av"><img loading="lazy" src="assets/img_668aca12d7.png" alt=""></span><span class="cap"><b>the director</b></span></div>
         <div class="result glass"><span class="k">Brand film</span><div class="big">15 years</div><span class="sub">concept · production control · on set</span></div>
         <div class="chips"><span class="chip">Script</span><span class="chip">Production</span><span class="chip">On set</span><span class="chip">Backstage</span></div>
         <div class="ep6sites"><div class="serm-h">Production · owned end-to-end</div><span class="sm-row"><span class="sm-dot"></span><b>Concept &amp; script</b><em>written</em></span><span class="sm-row"><span class="sm-dot"></span><b>Contractor</b><em>found &amp; directed</em></span><span class="sm-row"><span class="sm-dot"></span><b>On set</b><em>active part</em></span><span class="sm-row"><span class="sm-dot"></span><b>Final cut</b><em>approved</em></span></div>
       </aside>
     </div>
-    <div class="prodwall" aria-label="The production"><div class="pw-h"><span>▶ The production — concept to final cut</span><span class="pw-sub">brand film · backstage · storyboard</span></div><div class="reelbox reelbig"><video class="reelvid" muted loop autoplay playsinline preload="metadata"><source src="assets/v_7f83245430.webm" type="video/webm"><source src="assets/v_3c3532a61f.mp4" type="video/mp4"></video><span class="reeltag">▶ Dobrograd · 15-year brand film</span></div><div class="pw-bs"><div class="pw-bs-h">On set · backstage</div><div class="pw-bs-row"><figure><video autoplay muted loop playsinline preload="metadata"><source src="assets/ep8_bs1.webm" type="video/webm"><source src="assets/ep8_bs1.mp4" type="video/mp4"></video></figure><figure><video autoplay muted loop playsinline preload="metadata"><source src="assets/ep8_bs2.webm" type="video/webm"><source src="assets/ep8_bs2.mp4" type="video/mp4"></video></figure><figure><video autoplay muted loop playsinline preload="metadata"><source src="assets/ep8_bs3.webm" type="video/webm"><source src="assets/ep8_bs3.mp4" type="video/mp4"></video></figure></div></div><div class="sbstrip"><div class="sbstrip-h">Storyboard · розкадрування</div><div class="sbstrip-row"><img src="assets/img_b1805b5b70.jpg" alt="storyboard 1" loading="lazy"><img src="assets/img_40d29468a0.jpg" alt="storyboard 2" loading="lazy"><img src="assets/img_616ef3126c.jpg" alt="storyboard 3" loading="lazy"><img src="assets/img_e67506473a.jpg" alt="storyboard 4" loading="lazy"><img src="assets/img_afe63aae3a.jpg" alt="storyboard 5" loading="lazy"></div></div></div><div class="principle"><p class="subtitle">Own the story, hire the craft — control every frame that carries the brand.</p></div>
+    <div class="prodwall" aria-label="The production"><div class="pw-h"><span>▶ The production — concept to final cut</span><span class="pw-sub">brand film · backstage · storyboard</span></div><div class="reelbox reelbig"><video class="reelvid" muted loop data-auto playsinline preload="none" poster="assets/v_3c3532a61f_p.jpg"><source src="assets/v_7f83245430.webm" type="video/webm"><source src="assets/v_3c3532a61f.mp4" type="video/mp4"></video><span class="reeltag">▶ Dobrograd · 15-year brand film</span></div><div class="pw-bs"><div class="pw-bs-h">On set · backstage</div><div class="pw-bs-row"><figure><video data-auto muted loop playsinline preload="none" poster="assets/ep8_bs1_p.jpg"><source src="assets/ep8_bs1.webm" type="video/webm"><source src="assets/ep8_bs1.mp4" type="video/mp4"></video></figure><figure><video data-auto muted loop playsinline preload="none" poster="assets/ep8_bs2_p.jpg"><source src="assets/ep8_bs2.webm" type="video/webm"><source src="assets/ep8_bs2.mp4" type="video/mp4"></video></figure><figure><video data-auto muted loop playsinline preload="none" poster="assets/ep8_bs3_p.jpg"><source src="assets/ep8_bs3.webm" type="video/webm"><source src="assets/ep8_bs3.mp4" type="video/mp4"></video></figure></div></div><div class="sbstrip"><div class="sbstrip-h">Storyboard · розкадрування</div><div class="sbstrip-row"><img src="assets/img_b1805b5b70.jpg" alt="storyboard 1" loading="lazy"><img src="assets/img_40d29468a0.jpg" alt="storyboard 2" loading="lazy"><img src="assets/img_616ef3126c.jpg" alt="storyboard 3" loading="lazy"><img src="assets/img_e67506473a.jpg" alt="storyboard 4" loading="lazy"><img src="assets/img_afe63aae3a.jpg" alt="storyboard 5" loading="lazy"></div></div></div><div class="principle"><p class="subtitle">Own the story, hire the craft — control every frame that carries the brand.</p></div>
   </div>
 </section>
 
@@ -1050,7 +1082,7 @@ document.getElementById('pow').onclick=function(){
   document.querySelectorAll('.filmstrip').forEach(function(fs){ var fr=fs.querySelectorAll('.frame'); var dt=fs.querySelectorAll('.fdot'); if(!fr.length)return; var i=0; fr[0].classList.add('on'); if(dt[0])dt[0].classList.add('on'); if(!rm&&fr.length>1){ setInterval(function(){ fr[i].classList.remove('on'); if(dt[i])dt[i].classList.remove('on'); i=(i+1)%fr.length; fr[i].classList.add('on'); if(dt[i])dt[i].classList.add('on'); },2600); } });
 })();
 </script>
-<div id="buddy" class="buddy" aria-hidden="true"><div class="buddy-sub" id="buddySub"></div><div class="buddy-fig" id="buddyFig"><video id="b_talk" class="on" muted playsinline preload="auto"><source src="assets/v_663859a6f9.webm" type="video/webm"></video></div></div><script>
+<div id="buddy" class="buddy" aria-hidden="true"><div class="buddy-sub" id="buddySub"></div><div class="buddy-fig" id="buddyFig"><video id="b_talk" class="on" muted playsinline preload="metadata"><source src="assets/v_663859a6f9.webm" type="video/webm"></video></div></div><script>
 (function(){
   var buddy=document.getElementById('buddy'),fig=document.getElementById('buddyFig'),sub=document.getElementById('buddySub');
   var talk=document.getElementById('b_talk');
@@ -1137,6 +1169,45 @@ document.getElementById('pow').onclick=function(){
       document.body.appendChild(s); setTimeout(function(){s.remove();},1300+i*35);
     })(i);}
     clearTimeout(t); t=setTimeout(function(){stage.classList.remove('live'); if(cap)cap.textContent='Kostiantyn Popov — reporting';},2900);
+  });
+})();
+</script><script>
+(function(){
+  var vids=[].slice.call(document.querySelectorAll('video[data-auto]'));
+  if(!vids.length)return;
+  var mq=window.matchMedia('(max-width:640px)').matches;
+  var save=navigator.connection&&navigator.connection.saveData;
+  var rm=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  function tapPlay(v){v.style.cursor='pointer';v.addEventListener('click',function(){try{if(v.paused){v.play();}else{v.pause();}}catch(e){}});}
+  if(mq||save||rm){ vids.forEach(tapPlay); return; }        // phones/data-saver: poster + tap
+  if(!('IntersectionObserver' in window)){ vids.forEach(function(v){try{v.play();}catch(e){}}); return; }
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;
+    if(e.isIntersecting){ var p=v.play(); if(p&&p.catch)p.catch(function(){}); }
+    else if(!v.paused){ try{v.pause();}catch(e){} }
+  });},{threshold:0.25});
+  vids.forEach(function(v){io.observe(v);});
+})();
+</script><script>
+(function(){
+  // open badges on cassettes
+  [].slice.call(document.querySelectorAll('.tape')).forEach(function(t){
+    if(t.querySelector('.open-badge'))return;
+    var b=document.createElement('span'); b.className='open-badge'; b.textContent='▶ OPEN';
+    t.insertBefore(b,t.firstChild);
+  });
+  // end-of-episode CTAs
+  var eps=[].slice.call(document.querySelectorAll('section.ep'));
+  var contents=document.getElementById('contents');
+  var last=document.querySelector('.contact')||document.querySelector('footer,.note');
+  function go(el){ if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }
+  eps.forEach(function(ep,i){
+    var wrap=ep.querySelector('.wrap'); if(!wrap||wrap.querySelector('.ep-cta'))return;
+    var next=eps[i+1]||last;
+    var cta=document.createElement('div'); cta.className='ep-cta';
+    var b1=document.createElement('button'); b1.className='ep-btn'; b1.type='button'; b1.textContent='◂ Contents'; b1.onclick=function(){go(contents);};
+    var b2=document.createElement('button'); b2.className='ep-btn pri'; b2.type='button'; b2.textContent=eps[i+1]?'Next episode ▸':'Get in touch ▸'; b2.onclick=function(){go(next);};
+    if(contents)cta.appendChild(b1); cta.appendChild(b2);
+    wrap.appendChild(cta);
   });
 })();
 </script></body>
