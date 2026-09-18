@@ -332,7 +332,7 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
 #crtdot.flash{animation:dotFlash .55s ease-out}
 @keyframes dotFlash{0%{opacity:0;transform:translate(-50%,-50%) scale(.1)}30%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(.15)}}
 .mascot-wrap{position:absolute;z-index:9;top:4px;right:17%;width:clamp(185px,19vw,245px);aspect-ratio:440/430;transform-origin:50% 74%;transition:transform .05s linear}
-.mascot-wrap video{position:absolute;top:0;left:0;width:100%;height:auto;display:block;opacity:0;transition:opacity .32s ease;will-change:opacity}
+.mascot-wrap video{position:absolute;top:0;left:0;width:100%;height:auto;display:block;opacity:0;transition:opacity .6s ease;will-change:opacity}
 .mascot-wrap video.on{opacity:1}
 .epmasc .av{overflow:hidden;padding:0}
 .epmasc .av img{width:100%;height:100%;object-fit:cover;object-position:50% 12%;border-radius:inherit;display:block}
@@ -642,9 +642,9 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
 @keyframes headtalk{from{transform:translateX(0)}to{transform:translateX(-97.2222%)}}
 .headbox.talking .headstrip{animation:headtalk 1.9s steps(35) 1 both}
 .headbox.talkloop .headstrip{animation:headtalk 1.9s steps(35) infinite}
-@keyframes headdrop{to{transform:translateY(9%) rotate(-3deg)}}
-.headbox.headdrop{animation:headdrop .5s ease forwards;transform-origin:50% 80%}
-@media (prefers-reduced-motion:reduce){.headbox{animation:none}.headbox.talking .headstrip,.headbox.talkloop .headstrip{animation:none}.headbox.headdrop{animation:none;transform:translateY(7%)}}
+@keyframes headdrop{to{transform:translateY(18%) rotate(-7deg)}}
+.headbox.headdrop{animation:headdrop .7s cubic-bezier(.33,0,.2,1) forwards;transform-origin:50% 58%}
+@media (prefers-reduced-motion:reduce){.headbox{animation:none}.headbox.talking .headstrip,.headbox.talkloop .headstrip{animation:none}.headbox.headdrop{animation:none;transform:translateY(15%) rotate(-6deg)}}
 @media (max-width:640px){.buddy-fig{filter:drop-shadow(0 5px 9px rgba(0,0,0,.22))}}
 @media (max-width:640px){
   .mascot-wrap video{display:none!important}
@@ -656,7 +656,7 @@ html{overflow-x:clip}
 
 /* ===== About: podcast mic (white) ===== */
 .micstudio{position:relative;background:var(--paper);overflow:hidden;border:none}
-.micstudio .micvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:block;transform:rotate(var(--microt,0deg));transform-origin:50% 50%;transition:transform .12s linear;will-change:transform}
+.micstudio .micvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:block}
 .ms-onair{position:absolute;top:14px;right:14px;z-index:3;display:flex;align-items:center;gap:.5em;font-family:var(--f-mono);font-size:.58rem;letter-spacing:.16em;color:#fff;background:rgba(224,54,44,.95);padding:5px 12px;border-radius:999px;box-shadow:0 6px 16px -4px rgba(224,54,44,.55);opacity:0;transform:translateY(-5px) scale(.96);transition:opacity .5s ease,transform .5s ease}
 .ms-onair i{width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff}
 .micstudio.live .ms-onair{opacity:1;transform:none}
@@ -1194,7 +1194,7 @@ document.getElementById('pow').onclick=function(){
   });
 })();
 </script><script>
-(function(){var st=document.getElementById('micStage');if(!st)return;var v=document.getElementById('micVid');function play(){try{if(v){v.muted=true;var p=v.play();if(p&&p.catch)p.catch(function(){});}}catch(e){}}function pause(){try{if(v)v.pause();}catch(e){}}if(!('IntersectionObserver' in window)){st.classList.add('live');play();return;}var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){st.classList.add('live');play();}else{st.classList.remove('live');pause();}});},{threshold:0.35});io.observe(st);var _tk=false;function _rot(){_tk=false;var r=st.getBoundingClientRect(),vh=window.innerHeight||800;if(r.bottom<-140||r.top>vh+140)return;var mid=r.top+r.height/2,prog=(mid-vh/2)/vh,rot=prog*-34;if(rot>18)rot=18;else if(rot<-18)rot=-18;v.style.setProperty('--microt',rot.toFixed(2)+'deg');}function _osc(){if(!_tk){_tk=true;requestAnimationFrame(_rot);}}window.addEventListener('scroll',_osc,{passive:true});window.addEventListener('resize',_osc,{passive:true});_rot();})();
+(function(){var st=document.getElementById('micStage'); if(!st)return;var v=document.getElementById('micVid'); if(!v)return;try{v.removeAttribute('loop');v.removeAttribute('autoplay');v.muted=true;v.pause();}catch(e){}var loaded=false,dur=0,tk=false;function ensure(){ if(loaded)return; loaded=true; try{v.preload='auto';v.load();}catch(e){} }v.addEventListener('loadedmetadata',function(){dur=v.duration||6;scrub();});v.addEventListener('loadeddata',function(){scrub();});function scrub(){ tk=false; var r=st.getBoundingClientRect(),vh=window.innerHeight||800;  if(r.bottom<-120||r.top>vh+600){ st.classList.remove('live'); return; }  ensure();  st.classList.toggle('live', r.top<vh*0.85 && r.bottom>vh*0.15);  if(dur>0 && v.readyState>=1){ var total=vh+r.height, prog=(vh-r.top)/total; if(prog<0)prog=0; else if(prog>1)prog=1;    var t=prog*dur; if(t>dur-0.03)t=dur-0.03; if(t<0)t=0;    try{ if(typeof v.fastSeek==='function') v.fastSeek(t); else v.currentTime=t; }catch(e){} } }function onSc(){ if(!tk){ tk=true; requestAnimationFrame(scrub);} }window.addEventListener('scroll',onSc,{passive:true}); window.addEventListener('resize',onSc,{passive:true});if('IntersectionObserver' in window){ new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)ensure();});},{rootMargin:'800px 0px'}).observe(st); } else ensure();scrub();})();
 </script><script>
 (function(){
   var vids=[].slice.call(document.querySelectorAll('video[data-auto]'));
