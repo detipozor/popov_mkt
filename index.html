@@ -630,6 +630,20 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
   .folders .lead .swipehint{display:inline-flex}
 }
 .swipehint{display:none;font-family:var(--f-mono);font-size:.62rem;letter-spacing:.1em;color:var(--muted-d);align-items:center;gap:.4em}
+
+/* ===== head cutout (transparent PNG) ===== */
+.mascot-wrap .mhead{position:absolute;top:0;left:0;width:100%;height:auto;display:none}
+.buddy-fig img{position:absolute;top:0;left:0;width:100%;height:auto;display:block;filter:drop-shadow(0 12px 20px rgba(0,0,0,.55))}
+@media (max-width:640px){
+  .mascot-wrap video{display:none!important}
+  .mascot-wrap .mhead{display:block}
+}
+/* orbit: hold still on phones (battery + no tiny-tile jitter) */
+@media (max-width:640px){
+  .orbit-web,.ring.r1,.ring.r2,.ring.r1 .pl,.ring.r2 .pl{animation:none!important}
+}
+/* horizontal overflow safety */
+html{overflow-x:clip}
 </style>
 </head>
 <body>
@@ -646,12 +660,12 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
 
  <div id="crtdot"></div>
   <div class="mascot-wrap" id="mwrap">
-    <video id="v_sweep" muted playsinline preload="auto"><source src="assets/v_5497a98295.webm" type="video/webm"></video>
-    <video id="v_idle" class="on" muted playsinline loop preload="auto"><source src="assets/v_8131016505.webm" type="video/webm"></video>
+    <img id="mheadimg" class="mhead" src="assets/head.png" alt="Kostiantyn" width="440" height="430">
+    <video id="v_sweep" muted playsinline preload="metadata"><source src="assets/v_5497a98295.webm" type="video/webm"></video>
+    <video id="v_idle" class="on" muted playsinline loop preload="metadata"><source src="assets/v_8131016505.webm" type="video/webm"></video>
     <video id="v_look" muted playsinline preload="metadata"><source src="assets/v_b1d2fef44b.webm" type="video/webm"></video>
     <video id="v_happy" muted playsinline preload="metadata"><source src="assets/v_0e55abb5e4.webm" type="video/webm"></video>
     <video id="v_sad" muted playsinline preload="metadata"><source src="assets/v_c5e2d532c1.webm" type="video/webm"></video>
-  <div class="hero-sub" id="heroSub"></div>
   </div>
   <div class="crt on">
     <div class="crt-bg" id="media"></div><div class="statfx" id="stat"></div><video id="catA" class="catvid" playsinline preload="none"><source src="assets/v_574ed8c3d2.webm" type="video/webm"><source src="assets/v_66853824b4.mp4" type="video/mp4"></video><video id="catB" class="catvid" playsinline preload="none"><source src="assets/v_a57fe2952e.webm" type="video/webm"><source src="assets/v_06b4749017.mp4" type="video/mp4"></video>
@@ -674,6 +688,7 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
       </div>
     </div>
   </div>
+  <div class="hero-sub" id="heroSub"></div>
 
 </header>
 
@@ -759,7 +774,7 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
 <!-- TOOLS -->
 <section class="section tools light snap" aria-labelledby="tools-h">
   <div class="wrap">
-    <div class="lead"><span class="eyebrow">The toolkit</span><h2 id="tools-h">Tools <em>I</em> use.</h2></div>
+    <div class="lead"><span class="eyebrow">The toolkit</span><h2 id="tools-h">Tools I use.</h2></div>
     <div class="kbd">
       <div class="kbd-in">
         <div class="krw">
@@ -811,10 +826,10 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
         <div class="epmasc"><span class="av"><img loading="lazy" src="assets/img_a760d057ec.png" alt=""></span><span class="cap"><b>the deal-maker</b></span></div>
         <div class="result glass"><span class="k">Price per m²</span><div class="big">$900→1,250</div><span class="sub">+ 7 anchor chains · ~6 months</span></div>
         <div class="chips"><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_c3bab274ce.png" alt="">Nova Post</span><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_26e82a0bad.png" alt="">Rozetka</span><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_4c7404c553.png" alt="">GBar</span><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_6c1ea9066f.png" alt="">ATB</span><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_987100ebda.png" alt="">Silpo</span><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_382285aa18.png" alt="">PrivatBank</span></div>
-        <div class="filmstrip" aria-label="Sequence"><span class="fbadge">sequence ▸</span><div class="frame"><img loading="lazy" src="assets/img_0eb190b8b7.jpg" alt=""><span class="fcap">Aerial · masterplan</span></div><div class="frame logostile"><div class="logogrid"><img loading="lazy" src="assets/img_c3bab274ce.png" alt=""><img loading="lazy" src="assets/img_26e82a0bad.png" alt=""><img loading="lazy" src="assets/img_4c7404c553.png" alt=""><img loading="lazy" src="assets/img_6c1ea9066f.png" alt=""><img loading="lazy" src="assets/img_987100ebda.png" alt=""><img loading="lazy" src="assets/img_382285aa18.png" alt=""></div><span class="fcap">2 · Brand logos tiling in</span></div><div class="frame"><img loading="lazy" src="assets/img_7564662b9c.jpg" alt=""><span class="fcap">The complex · street view</span></div><div class="fdots"><span class="fdot"></span><span class="fdot"></span><span class="fdot"></span></div></div>
+        
       </aside>
     </div>
-    <div class="orbitwrap" aria-label="Anchor tenants orbiting the project"><div class="orbit-h"><span>▶ Anchor tenants orbiting the project</span><span class="orbit-sub">7 chains signed · price/m² $900 → $1,250</span></div><div class="orbit"><svg class="orbit-web" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="rgba(255,196,0,.18)" stroke-width="0.35" stroke-dasharray="1.4 1.6"><circle cx="50" cy="50" r="46"/><circle cx="50" cy="50" r="32.5"/><circle cx="50" cy="50" r="19"/></g><g stroke="rgba(255,196,0,.09)" stroke-width="0.3"><line x1="50" y1="3" x2="50" y2="97"/><line x1="3" y1="50" x2="97" y2="50"/><line x1="16" y1="16" x2="84" y2="84"/><line x1="84" y1="16" x2="16" y2="84"/></g></svg><div class="orbit-core"><img loading="lazy" src="assets/img_7564662b9c.jpg" alt="The complex"><span class="orbit-core-tag">the complex</span></div><div class="ring r1"><span class="planet" style="--a:0deg"><span class="pf"><span class="pl"><img src="assets/img_c3bab274ce.png" alt="Nova Post" loading="lazy"></span></span></span><span class="planet" style="--a:120deg"><span class="pf"><span class="pl"><img src="assets/img_6c1ea9066f.png" alt="ATB" loading="lazy"></span></span></span><span class="planet" style="--a:240deg"><span class="pf"><span class="pl"><img src="assets/img_987100ebda.png" alt="Silpo" loading="lazy"></span></span></span></div><div class="ring r2"><span class="planet" style="--a:60deg"><span class="pf"><span class="pl"><img src="assets/img_26e82a0bad.png" alt="Rozetka" loading="lazy"></span></span></span><span class="planet" style="--a:180deg"><span class="pf"><span class="pl"><img src="assets/img_4c7404c553.png" alt="GBar" loading="lazy"></span></span></span><span class="planet" style="--a:300deg"><span class="pf"><span class="pl"><img src="assets/img_382285aa18.png" alt="PrivatBank" loading="lazy"></span></span></span></div></div></div><div class="principle"><p class="subtitle">The right tenants raise the value of the whole project — not just fill space.</p></div>
+    <div class="orbitwrap" aria-label="Anchor tenants orbiting the project"><div class="orbit-h"><span>▶ Anchor tenants orbiting the project</span><span class="orbit-sub">retail mix · price/m² $900 → $1,250</span></div><div class="orbit"><svg class="orbit-web" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="rgba(255,196,0,.18)" stroke-width="0.35" stroke-dasharray="1.4 1.6"><circle cx="50" cy="50" r="46"/><circle cx="50" cy="50" r="32.5"/><circle cx="50" cy="50" r="19"/></g><g stroke="rgba(255,196,0,.09)" stroke-width="0.3"><line x1="50" y1="3" x2="50" y2="97"/><line x1="3" y1="50" x2="97" y2="50"/><line x1="16" y1="16" x2="84" y2="84"/><line x1="84" y1="16" x2="16" y2="84"/></g></svg><div class="orbit-core"><img loading="lazy" src="assets/img_7564662b9c.jpg" alt="The complex"><span class="orbit-core-tag">the complex</span></div><div class="ring r1"><span class="planet" style="--a:0deg"><span class="pf"><span class="pl"><img src="assets/img_c3bab274ce.png" alt="Nova Post" loading="lazy"></span></span></span><span class="planet" style="--a:60deg"><span class="pf"><span class="pl"><img src="assets/img_6c1ea9066f.png" alt="ATB" loading="lazy"></span></span></span><span class="planet" style="--a:120deg"><span class="pf"><span class="pl"><img src="assets/img_987100ebda.png" alt="Silpo" loading="lazy"></span></span></span><span class="planet" style="--a:180deg"><span class="pf"><span class="pl"><img src="assets/logo_aurora.png" alt="Aurora" loading="lazy"></span></span></span><span class="planet" style="--a:240deg"><span class="pf"><span class="pl"><img src="assets/logo_novus.png" alt="Novus" loading="lazy"></span></span></span><span class="planet" style="--a:300deg"><span class="pf"><span class="pl"><img src="assets/logo_comfy.png" alt="Comfy" loading="lazy"></span></span></span></div><div class="ring r2"><span class="planet" style="--a:30deg"><span class="pf"><span class="pl"><img src="assets/img_26e82a0bad.png" alt="Rozetka" loading="lazy"></span></span></span><span class="planet" style="--a:90deg"><span class="pf"><span class="pl"><img src="assets/img_4c7404c553.png" alt="GBar" loading="lazy"></span></span></span><span class="planet" style="--a:150deg"><span class="pf"><span class="pl"><img src="assets/img_382285aa18.png" alt="PrivatBank" loading="lazy"></span></span></span><span class="planet" style="--a:210deg"><span class="pf"><span class="pl"><img src="assets/logo_eva.png" alt="EVA" loading="lazy"></span></span></span><span class="planet" style="--a:270deg"><span class="pf"><span class="pl"><img src="assets/logo_foxtrot.png" alt="Foxtrot" loading="lazy"></span></span></span><span class="planet" style="--a:330deg"><span class="pf"><span class="pl"><img src="assets/logo_watsons.png" alt="Watsons" loading="lazy"></span></span></span></div></div></div><div class="principle"><p class="subtitle">The right tenants raise the value of the whole project — not just fill space.</p></div>
   </div>
 </section>
 
@@ -841,7 +856,7 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
           </div>
         </div>
         <div class="chips"><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_ee0d60e3cd.png" alt="">Meta</span><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_8d037a4169.png" alt="">Google</span><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_7d75d3806e.png" alt="">GA4</span><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_2656bf39c4.png" alt="">GTM</span><span class="chip logo"><img loading="lazy" class="chiplogo" src="assets/img_b5f149d959.png" alt="">Binotel</span></div>
-        <div class="ep2mini"><figure><img src="assets/ep2_mini_a.jpg" alt="ParkWill ad creative" loading="lazy"><figcaption>ParkWill</figcaption></figure><figure><img src="assets/ep2_mini_b.jpg" alt="PIONERSKIY ad creative" loading="lazy"><figcaption>PIONERSKIY</figcaption></figure><span class="ep2mini-tag">9 concepts · 2 brands · feed / stories / reels</span></div>
+        
       </aside>
     </div>
     <div class="crwall" aria-label="Ad creatives that ran"><div class="crwall-vp"><div class="crwall-track"><div class="crcard"><img src="assets/ep2_ad1.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><img src="assets/ep2_ad2.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><video data-auto muted loop playsinline preload="none" poster="assets/ep2_reel2_p.jpg"><source src="assets/ep2_reel2.webm" type="video/webm"><source src="assets/ep2_reel2.mp4" type="video/mp4"></video><span class="crtag">▶ reel</span></div><div class="crcard"><img src="assets/ep2_ad3.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><img src="assets/ep2_ad4.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><img src="assets/ep2_ad5.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><video data-auto muted loop playsinline preload="none" poster="assets/ep2_reel1_p.jpg"><source src="assets/ep2_reel1.webm" type="video/webm"><source src="assets/ep2_reel1.mp4" type="video/mp4"></video><span class="crtag">▶ reel</span></div><div class="crcard"><img src="assets/ep2_ad6.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><img src="assets/ep2_ad7.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><img src="assets/ep2_ad8.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><img src="assets/ep2_ad9.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><img src="assets/ep2_ad1.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><img src="assets/ep2_ad2.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><video data-auto muted loop playsinline preload="none" poster="assets/ep2_reel2_p.jpg"><source src="assets/ep2_reel2.webm" type="video/webm"><source src="assets/ep2_reel2.mp4" type="video/mp4"></video><span class="crtag">▶ reel</span></div><div class="crcard"><img src="assets/ep2_ad3.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><img src="assets/ep2_ad4.jpg" alt="" loading="lazy"><span class="crtag">ParkWill</span></div><div class="crcard"><img src="assets/ep2_ad5.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><video data-auto muted loop playsinline preload="none" poster="assets/ep2_reel1_p.jpg"><source src="assets/ep2_reel1.webm" type="video/webm"><source src="assets/ep2_reel1.mp4" type="video/mp4"></video><span class="crtag">▶ reel</span></div><div class="crcard"><img src="assets/ep2_ad6.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><img src="assets/ep2_ad7.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><img src="assets/ep2_ad8.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div><div class="crcard"><img src="assets/ep2_ad9.jpg" alt="" loading="lazy"><span class="crtag">PIONERSKIY</span></div></div></div></div><div class="principle"><p class="subtitle">A system and analytics beat manually working the ad account.</p></div>
@@ -994,9 +1009,7 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
   <span>Warsaw · Poland <b class="st">★</b> That’s a wrap <b class="st">★</b> Stories that sell, systems that scale <b class="st">★</b>&nbsp;</span>
 </div></div>
 
-<div class="note">
-  <b>Concept v10</b> — now <b>8 episodes</b>: added EP.08 <b>Production</b> (Iron Invest 15-year brand film — script + contractor control + backstage). EP.02 gets a <b>stepped CPL chart</b> ($10 apartment · $12 townhouse · $20 business) — first taste of more varied case layouts. Full-screen CRT hero (showreel behind the title, controls on the set, mascot peeks &amp; reacts), cassettes = episodes, round-cloud case mascots, placeholder photos throughout (swap for your real media). Next: multi-frame animated proofs (EP.01 aerial→logo tiles→building; EP.03 facade→SMS→storage) once your shots arrive, and diversify the rest of the cases.
-</div>
+
 
 <script>window.PH={hero:["assets/img_a64b8c9bfe.jpg","assets/img_6d7a8faf8d.jpg","assets/img_7f87a6f433.jpg","assets/img_3434792b83.jpg","assets/img_584b250c12.jpg","assets/img_5e43561dde.jpg"],portrait:"assets/img_0c1cb93530.jpg",shots:["assets/img_0c48a9d9d7.jpg","assets/img_2dea5d63be.jpg","assets/img_09963e47cf.jpg","assets/img_5ed6c16bdf.jpg","assets/img_12a87b8337.jpg","assets/img_6a89b43774.jpg","assets/img_ca72b2e55f.jpg"]};window.HEROLAB=["on camera · with mic","youtube · factum","shoot · models","real estate · promo","reporting · tv","event · billboard"];</script>
 <script>
@@ -1005,6 +1018,7 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
 var media=document.getElementById('media'),osd=document.getElementById('osd'),stat=document.getElementById('stat'),mwrap=document.getElementById('mwrap'),ctrls=document.getElementById('ctrls');
 var vSweep=document.getElementById('v_sweep'),vIdle=document.getElementById('v_idle'),vL=document.getElementById('v_look'),vH=document.getElementById('v_happy'),vS=document.getElementById('v_sad');
 var all={sweep:vSweep,idle:vIdle,look:vL,happy:vH,sad:vS};
+var MOB=window.matchMedia('(max-width:640px)').matches;
 var mode='idle', off=false, overCtrls=false, returning=false;
 var dur=5, targetT=2.5, curT=2.5, idleTimer=0, lastSet=-1;
 var tRX=0,tRZ=0,tTX=0,tTY=0, cRX=0,cRZ=0,cTX=0,cTY=0;
@@ -1016,12 +1030,12 @@ function paint(){if(off){media.style.background='#000';osd.textContent='CH -- ·
 paint();setInterval(function(){if(Date.now()>=catU)fi=(fi+1)%frames.length;paint();},500);setInterval(function(){if(!off)t++;paint();},1000);
 function flash(){stat.classList.remove('on');void stat.offsetWidth;stat.classList.add('on');}
 function show(name){for(var k in all){all[k].classList.toggle('on',k===name);}}
-function goIdle(){mode='idle';show('idle');try{vIdle.loop=true;if(vIdle.paused)vIdle.play();}catch(e){}}
+function goIdle(){mode='idle';if(MOB)return;show('idle');try{vIdle.loop=true;if(vIdle.paused)vIdle.play();}catch(e){}}
 function toFollow(){if(mode!=='follow'){mode='follow';show('sweep');try{vSweep.pause();}catch(e){}}}
-function playHold(name){mode='react';var v=all[name];show(name);try{v.currentTime=0;v.loop=false;v.play();}catch(e){}v.onended=function(){try{v.pause();}catch(e){}};}
-function playThen(name,after){mode='react';var v=all[name];show(name);try{v.currentTime=0;v.loop=false;v.play();}catch(e){}v.onended=function(){if(after)after();};}
+function playHold(name){mode='react';if(MOB)return;var v=all[name];show(name);try{v.currentTime=0;v.loop=false;v.play();}catch(e){}v.onended=function(){try{v.pause();}catch(e){}};}
+function playThen(name,after){mode='react';if(MOB){if(after)setTimeout(after,1300);return;}var v=all[name];show(name);try{v.currentTime=0;v.loop=false;v.play();}catch(e){}v.onended=function(){if(after)after();};}
 vSweep.addEventListener('loadedmetadata',function(){dur=vSweep.duration||5;targetT=curT=dur/2;});
-window.addEventListener('load',function(){vSweep.play().then(function(){vSweep.pause();vSweep.currentTime=dur/2;}).catch(function(){});try{vIdle.play();}catch(e){}goIdle();});
+window.addEventListener('load',function(){if(MOB)return;vSweep.play().then(function(){vSweep.pause();vSweep.currentTime=dur/2;}).catch(function(){});try{vIdle.play();}catch(e){}goIdle();});
 function applyTilt(){cRZ+=(tRZ-cRZ)*0.12;cTX+=(tTX-cTX)*0.12;cTY+=(tTY-cTY)*0.12;mwrap.style.transform='translate('+cTX.toFixed(2)+'px,'+cTY.toFixed(2)+'px) rotate('+cRZ.toFixed(2)+'deg)';}
 function crt(cls){var c=document.querySelector('.crt');c.classList.remove('on','off');void c.offsetWidth;c.classList.add(cls);}
 function dotFlash(){var d=document.getElementById('crtdot');if(!d)return;d.classList.remove('flash');void d.offsetWidth;d.classList.add('flash');}
@@ -1082,11 +1096,11 @@ document.getElementById('pow').onclick=function(){
   document.querySelectorAll('.filmstrip').forEach(function(fs){ var fr=fs.querySelectorAll('.frame'); var dt=fs.querySelectorAll('.fdot'); if(!fr.length)return; var i=0; fr[0].classList.add('on'); if(dt[0])dt[0].classList.add('on'); if(!rm&&fr.length>1){ setInterval(function(){ fr[i].classList.remove('on'); if(dt[i])dt[i].classList.remove('on'); i=(i+1)%fr.length; fr[i].classList.add('on'); if(dt[i])dt[i].classList.add('on'); },2600); } });
 })();
 </script>
-<div id="buddy" class="buddy" aria-hidden="true"><div class="buddy-sub" id="buddySub"></div><div class="buddy-fig" id="buddyFig"><video id="b_talk" class="on" muted playsinline preload="metadata"><source src="assets/v_663859a6f9.webm" type="video/webm"></video></div></div><script>
+<div id="buddy" class="buddy" aria-hidden="true"><div class="buddy-sub" id="buddySub"></div><div class="buddy-fig" id="buddyFig"><img id="b_talk" class="on" src="assets/head.png" alt="Kostiantyn"></div></div><script>
 (function(){
   var buddy=document.getElementById('buddy'),fig=document.getElementById('buddyFig'),sub=document.getElementById('buddySub');
   var talk=document.getElementById('b_talk');
-  var rm=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var rm=window.matchMedia('(prefers-reduced-motion:reduce)').matches||window.matchMedia('(max-width:640px)').matches;
   var LINES={
     contents:"Eight episodes. Zero filler. Popcorn optional.",
     ep1:"I made empty offices the main character.",
@@ -1104,10 +1118,10 @@ document.getElementById('pow').onclick=function(){
   var GEN=["Keep scrolling — it gets better.","This one's my favorite.","Told you it was worth it."]; var gi=0;
   function lineFor(sec){ if(sec.id&&LINES[sec.id])return LINES[sec.id]; var c=' '+sec.className+' ';
     for(var i=0;i<CLASS_LINES.length;i++){ if(c.indexOf(CLASS_LINES[i][0])>=0)return CLASS_LINES[i][1]; } return GEN[(gi++)%GEN.length]; }
+  var speakT=0;
   function speak(line){
     sub.textContent=line; sub.classList.add('on');
-    try{ talk.pause(); talk.currentTime=0; talk.loop=false; var p=talk.play(); if(p&&p.catch)p.catch(function(){}); }catch(e){}
-    talk.onended=function(){ try{talk.pause();}catch(e){} sub.classList.remove('on'); };  // play once -> freeze + hide words
+    clearTimeout(speakT); speakT=setTimeout(function(){ sub.classList.remove('on'); }, 3600);
   }
   var cur=null;
   function activate(sec,i){
@@ -1179,7 +1193,7 @@ document.getElementById('pow').onclick=function(){
   var save=navigator.connection&&navigator.connection.saveData;
   var rm=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
   function tapPlay(v){v.style.cursor='pointer';v.addEventListener('click',function(){try{if(v.paused){v.play();}else{v.pause();}}catch(e){}});}
-  if(mq||save||rm){ vids.forEach(tapPlay); return; }        // phones/data-saver: poster + tap
+  if(rm){ vids.forEach(tapPlay); return; }                    // reduced-motion only: tap to play
   if(!('IntersectionObserver' in window)){ vids.forEach(function(v){try{v.play();}catch(e){}}); return; }
   var io=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;
     if(e.isIntersecting){ var p=v.play(); if(p&&p.catch)p.catch(function(){}); }
