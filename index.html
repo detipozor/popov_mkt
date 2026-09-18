@@ -633,8 +633,10 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
 
 /* ===== head cutout (transparent PNG) ===== */
 .mascot-wrap .mhead{position:absolute;top:0;left:0;width:100%;height:auto;display:none}
-.buddy-fig img{position:absolute;top:0;left:0;width:100%;height:auto;display:block;filter:drop-shadow(0 8px 13px rgba(0,0,0,.30))}
-@media (max-width:640px){.buddy-fig img{filter:drop-shadow(0 5px 9px rgba(0,0,0,.22))}}
+.buddy-fig{filter:drop-shadow(0 8px 13px rgba(0,0,0,.28))}
+.talkwrap{position:absolute;inset:0;overflow:hidden}
+.talkstrip{position:absolute;top:0;left:0;height:100%;width:auto;max-width:none;display:block;transform:translateX(0);will-change:transform}
+@media (max-width:640px){.buddy-fig{filter:drop-shadow(0 5px 9px rgba(0,0,0,.22))}}
 @media (max-width:640px){
   .mascot-wrap video{display:none!important}
   .mascot-wrap .mhead{display:block}
@@ -647,8 +649,10 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
 html{overflow-x:clip}
 
 /* ===== About: podcast mic (white) ===== */
-.micstudio{position:relative;background:var(--paper);overflow:hidden}
+.micstudio{position:relative;background:var(--paper);overflow:hidden;border:none}
 .micstudio .micvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;display:block}
+.ms-glow{position:absolute;left:50%;top:40%;width:88%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;z-index:1;pointer-events:none;background:radial-gradient(circle,rgba(255,150,40,.55),rgba(255,180,90,.20) 46%,transparent 68%);opacity:0;transition:opacity .7s ease;mix-blend-mode:multiply}
+.micstudio.live .ms-glow{opacity:1}
 .ms-onair{position:absolute;top:14px;right:14px;z-index:3;display:flex;align-items:center;gap:.5em;font-family:var(--f-mono);font-size:.58rem;letter-spacing:.16em;color:#fff;background:rgba(224,54,44,.95);padding:5px 12px;border-radius:999px;box-shadow:0 6px 16px -4px rgba(224,54,44,.55);opacity:0;transform:translateY(-5px) scale(.96);transition:opacity .5s ease,transform .5s ease}
 .ms-onair i{width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff}
 .micstudio.live .ms-onair{opacity:1;transform:none}
@@ -773,7 +777,7 @@ html{overflow-x:clip}
         <h2 id="about-h">Story first,<br>system always.</h2>
         <p class="about-p">Full-cycle marketer with roots in <span class="mark">journalism and content</span> — I started out on camera, mic in hand, so story, communication and brand sit at the core of everything I do. I work across strategy, brand, content, PR, offline and B2B partnerships, and build marketing as a system — together with the specialists and contractors who run performance and analytics. I like problems where the resources are tight but the result still has to land.</p>
       </div>
-      <div class="still micstudio" id="micStage" aria-label="Podcast microphone"><video class="micvid" id="micVid" muted loop data-auto playsinline preload="none" poster="assets/mic_poster.jpg"><source src="assets/mic.mp4" type="video/mp4"></video><div class="ms-onair" id="msOnair"><i></i>ON AIR</div></div>
+      <div class="still micstudio" id="micStage" aria-label="Podcast microphone"><video class="micvid" id="micVid" muted loop playsinline preload="none" poster="assets/mic_poster.jpg"><source src="assets/mic.mp4" type="video/mp4"></video><div class="ms-glow"></div><div class="ms-onair" id="msOnair"><i></i>ON AIR</div></div>
     </div>
   </div>
 </section>
@@ -1111,7 +1115,7 @@ document.getElementById('pow').onclick=function(){
   document.querySelectorAll('.filmstrip').forEach(function(fs){ var fr=fs.querySelectorAll('.frame'); var dt=fs.querySelectorAll('.fdot'); if(!fr.length)return; var i=0; fr[0].classList.add('on'); if(dt[0])dt[0].classList.add('on'); if(!rm&&fr.length>1){ setInterval(function(){ fr[i].classList.remove('on'); if(dt[i])dt[i].classList.remove('on'); i=(i+1)%fr.length; fr[i].classList.add('on'); if(dt[i])dt[i].classList.add('on'); },2600); } });
 })();
 </script>
-<div id="buddy" class="buddy" aria-hidden="true"><div class="buddy-sub" id="buddySub"></div><div class="buddy-fig" id="buddyFig"><img id="b_talk" class="on" src="assets/buddy_talk0.png" alt="Kostiantyn"></div></div><script>
+<div id="buddy" class="buddy" aria-hidden="true"><div class="buddy-sub" id="buddySub"></div><div class="buddy-fig" id="buddyFig"><div class="talkwrap"><img class="talkstrip" id="b_talk" src="assets/buddy_sprite.webp" alt="Kostiantyn"></div></div></div><script>
 (function(){
   var buddy=document.getElementById('buddy'),fig=document.getElementById('buddyFig'),sub=document.getElementById('buddySub');
   var talk=document.getElementById('b_talk');
@@ -1133,13 +1137,13 @@ document.getElementById('pow').onclick=function(){
   var GEN=["Keep scrolling — it gets better.","This one's my favorite.","Told you it was worth it."]; var gi=0;
   function lineFor(sec){ if(sec.id&&LINES[sec.id])return LINES[sec.id]; var c=' '+sec.className+' ';
     for(var i=0;i<CLASS_LINES.length;i++){ if(c.indexOf(CLASS_LINES[i][0])>=0)return CLASS_LINES[i][1]; } return GEN[(gi++)%GEN.length]; }
-  var speakT=0, flap=0, FR=['assets/buddy_talk0.png','assets/buddy_talk1.png','assets/buddy_talk2.png'], PAT=[0,1,2,1], pi=0;
-  FR.forEach(function(u){var im=new Image(); im.src=u;});
+  var speakT=0, flap=0, flapStop=0, NF=14, cur=0, dir=1;
+  function frame(k){ if(talk) talk.style.transform='translateX(-'+(k*(100/NF)).toFixed(4)+'%)'; }
   function speak(line){
     sub.textContent=line; sub.classList.add('on');
-    clearInterval(flap); pi=0;
-    flap=setInterval(function(){ pi=(pi+1)%PAT.length; if(talk)talk.src=FR[PAT[pi]]; }, 130);
-    setTimeout(function(){ clearInterval(flap); if(talk)talk.src=FR[0]; }, 1900);
+    clearInterval(flap); cur=0; dir=1; frame(0);
+    flap=setInterval(function(){ cur+=dir; if(cur>=NF-1){cur=NF-1;dir=-1;} else if(cur<=0){cur=0;dir=1;} frame(cur); }, 55);
+    clearTimeout(flapStop); flapStop=setTimeout(function(){ clearInterval(flap); frame(0); }, 2400);
     clearTimeout(speakT); speakT=setTimeout(function(){ sub.classList.remove('on'); }, 3600);
   }
   var cur=null;
@@ -1184,7 +1188,7 @@ document.getElementById('pow').onclick=function(){
   });
 })();
 </script><script>
-(function(){var st=document.getElementById('micStage');if(!st)return;var v=document.getElementById('micVid');function play(){try{var p=v&&v.play();if(p&&p.catch)p.catch(function(){});}catch(e){}}if(!('IntersectionObserver' in window)){st.classList.add('live');play();return;}var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){st.classList.add('live');play();}else{st.classList.remove('live');}});},{threshold:0.45});io.observe(st);})();
+(function(){var st=document.getElementById('micStage');if(!st)return;var v=document.getElementById('micVid');function play(){try{if(v){v.muted=true;var p=v.play();if(p&&p.catch)p.catch(function(){});}}catch(e){}}function pause(){try{if(v)v.pause();}catch(e){}}if(!('IntersectionObserver' in window)){st.classList.add('live');play();return;}var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){st.classList.add('live');play();}else{st.classList.remove('live');pause();}});},{threshold:0.35});io.observe(st);})();
 </script><script>
 (function(){
   var vids=[].slice.call(document.querySelectorAll('video[data-auto]'));
