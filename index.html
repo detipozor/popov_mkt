@@ -69,7 +69,7 @@ img{max-width:100%} [hidden]{display:none!important} a{color:inherit}
   background:repeating-linear-gradient(to bottom, rgba(255,255,255,.055) 0 1px, transparent 1px 3px); mix-blend-mode:screen; opacity:.6}
 @media (prefers-reduced-motion:no-preference){.crt::after{animation:flick 7s steps(70) infinite}}
 @keyframes flick{0%,96%,100%{opacity:1}97%{opacity:.82}98%{opacity:.96}}
-.crt-top,.crt-center,.crt-bottom{position:relative; z-index:3}
+.crt-top,.crt-center,.crt-bottom{position:relative; z-index:10}
 .crt-top{display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; font-family:var(--f-mono); font-size:clamp(.56rem,1vw,.72rem); letter-spacing:.08em; color:rgba(237,235,228,.9); text-transform:uppercase}
 .crt-top .b{font-weight:600; color:#fff}
 .crt-top a.eml{text-decoration:none; cursor:pointer; transition:opacity .15s} .crt-top a.eml:hover{text-decoration:underline; opacity:.85}
@@ -85,10 +85,9 @@ img{max-width:100%} [hidden]{display:none!important} a{color:inherit}
 .mstate{display:none}
 .mglow{display:none}
 .manim{background-repeat:no-repeat}
-#m_idle{background-image:url(assets/anim_idle.webp);background-size:1000% 100%;background-position:0 0}
-#m_sad{background-image:url(assets/anim_sad.webp);background-size:1000% 100%;background-position:0 0}
-#m_happy{background-image:url(assets/anim_happy.webp);background-size:1100% 100%;background-position:0 0}
-@media(min-width:761px){.mglow{display:block;position:absolute;left:-24%;top:-8%;right:-12%;bottom:2%;z-index:0;pointer-events:none;background:radial-gradient(62% 76% at 54% 56%,rgba(150,158,200,.82),rgba(96,108,160,.5) 38%,rgba(44,52,96,.22) 64%,rgba(20,24,44,0) 80%)}.mstate{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:transform .4s cubic-bezier(.33,0,.2,1);z-index:5;pointer-events:none;filter:drop-shadow(0 22px 46px rgba(0,0,0,.5))}.mstate.on{opacity:1}#m_sad_img.on{transform:translateY(3%) rotate(-3deg);transform-origin:50% 62%}#mwrap{animation:mbreathe 4.8s ease-in-out infinite}@keyframes mbreathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}.bighead{display:block;position:absolute;inset:0;width:100%;height:100%;z-index:4;background-image:url(assets/turn_sprite.webp);background-repeat:no-repeat;background-size:1300% 100%;background-position:50% 0;filter:drop-shadow(0 22px 46px rgba(0,0,0,.5));transform-origin:50% 50%;will-change:background-position,transform,opacity}}
+#m_sad{background-image:url(assets/anim_sad.webp);background-size:1400% 100%;background-position:0 0}
+#m_happy{background-image:url(assets/anim_happy.webp);background-size:1600% 100%;background-position:0 0}
+@media(min-width:761px){.mglow{display:block;position:absolute;left:-24%;top:-8%;right:-12%;bottom:2%;z-index:0;pointer-events:none;background:radial-gradient(62% 76% at 54% 56%,rgba(150,158,200,.82),rgba(96,108,160,.5) 38%,rgba(44,52,96,.22) 64%,rgba(20,24,44,0) 80%)}.mstate{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:transform .4s cubic-bezier(.33,0,.2,1);z-index:5;pointer-events:none;filter:drop-shadow(0 22px 46px rgba(0,0,0,.5))}.mstate.on{opacity:1}#m_sad_img.on{transform:translateY(3%) rotate(-3deg);transform-origin:50% 62%}#mwrap{animation:mbreathe 5.6s ease-in-out infinite}@keyframes mbreathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}.bighead{display:block;position:absolute;inset:0;width:100%;height:100%;z-index:4;background-image:url(assets/turn_sprite.webp);background-repeat:no-repeat;background-size:1700% 100%;background-position:50% 0;filter:drop-shadow(0 22px 46px rgba(0,0,0,.5));transform-origin:50% 50%;will-change:background-position,transform,opacity}}
 @media(min-width:761px){
 .heroglow{display:block;position:absolute;right:0;top:0;bottom:0;width:64%;z-index:1;pointer-events:none;background:radial-gradient(ellipse 58% 54% at 74% 46%,rgba(78,108,66,.42),rgba(78,108,66,0) 62%)}
 .crt-center{align-self:flex-start;align-items:flex-start;text-align:left;max-width:min(600px,54%);margin:auto 0}
@@ -365,7 +364,7 @@ a.skip{position:absolute; left:-9999px} a.skip:focus{left:1rem; top:1rem; z-inde
 #crtdot{position:absolute;left:50%;top:50%;width:16px;height:16px;border-radius:50%;background:#fff;opacity:0;transform:translate(-50%,-50%) scale(0);box-shadow:0 0 30px 11px rgba(255,255,255,.9),0 0 6px 2px #cfe8ff;pointer-events:none;z-index:40}
 #crtdot.flash{animation:dotFlash .55s ease-out}
 @keyframes dotFlash{0%{opacity:0;transform:translate(-50%,-50%) scale(.1)}30%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(.15)}}
-.mascot-wrap{position:absolute;z-index:9;top:4px;right:17%;width:clamp(185px,19vw,245px);aspect-ratio:440/430;transform-origin:50% 74%;transition:transform .05s linear}
+.mascot-wrap{position:absolute;z-index:8;top:4px;right:17%;width:clamp(185px,19vw,245px);aspect-ratio:440/430;transform-origin:50% 74%;transition:transform .05s linear;pointer-events:none}
 .mascot-wrap video{position:absolute;top:0;left:0;width:100%;height:auto;display:block;opacity:0;transition:opacity .6s ease;will-change:opacity}
 .mascot-wrap video.on{opacity:1}
 .epmasc .av{overflow:hidden;padding:0}
@@ -800,12 +799,15 @@ html{overflow-x:clip}
 }
 @media(max-width:760px){
 #mHeadBox{display:none!important}
-#mwrap{position:absolute;left:auto;right:-5%;bottom:0;top:auto;margin:0;width:min(66vw,320px);aspect-ratio:592/560;z-index:2}
-.mglow{display:block;position:absolute;left:-34%;top:-4%;right:-16%;bottom:-2%;z-index:0;pointer-events:none;background:radial-gradient(58% 66% at 56% 56%,rgba(150,158,200,.55),rgba(96,108,160,.3) 42%,rgba(20,24,44,0) 78%)}
-.bighead{display:block;position:absolute;inset:0;width:100%;height:100%;z-index:1;background-image:url(assets/turn_sprite.webp);background-repeat:no-repeat;background-size:1300% 100%;background-position:50% 0;filter:drop-shadow(0 14px 30px rgba(0,0,0,.5))}
-.mstate{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:none;z-index:3;pointer-events:none;filter:drop-shadow(0 14px 30px rgba(0,0,0,.5))}
+.crt{justify-content:flex-start!important}
+.crt-center{margin:12px 0 0!important}
+.crt-bottom{margin-top:8px!important}
+#mwrap{position:absolute;left:50%;transform:translateX(-50%);right:auto;bottom:0;top:auto;margin:0;width:min(116vw,520px);aspect-ratio:520/492;z-index:8}
+.mglow{display:block;position:absolute;left:-16%;top:6%;right:-16%;bottom:-4%;z-index:0;pointer-events:none;background:radial-gradient(60% 58% at 50% 64%,rgba(150,158,200,.5),rgba(96,108,160,.28) 42%,rgba(20,24,44,0) 78%)}
+.bighead{display:block;position:absolute;inset:0;width:100%;height:100%;z-index:1;background-image:url(assets/turn_sprite.webp);background-repeat:no-repeat;background-size:1700% 100%;background-position:50% 0;filter:drop-shadow(0 14px 30px rgba(0,0,0,.55))}
+.mstate{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:none;z-index:3;pointer-events:none;filter:drop-shadow(0 14px 30px rgba(0,0,0,.55))}
 .mstate.on{opacity:1}
-.crt-top,.crt-center,.crt-bottom{z-index:6}
+.crt-top,.crt-center,.crt-bottom{z-index:10}
 }
 </style>
 </head>
@@ -822,16 +824,15 @@ html{overflow-x:clip}
 <header id="hero" class="hero snap">
 
  <div id="crtdot"></div>
+  <div class="crt on">
+    <div class="crt-bg" id="media"></div><canvas id="tvnoise" class="tvnoise" aria-hidden="true"></canvas><div class="heroglow" aria-hidden="true"></div><div class="statfx" id="stat"></div><video id="catA" class="catvid" playsinline preload="none"><source src="assets/v_574ed8c3d2.webm" type="video/webm"><source src="assets/v_66853824b4.mp4" type="video/mp4"></video><video id="catB" class="catvid" playsinline preload="none"><source src="assets/v_a57fe2952e.webm" type="video/webm"><source src="assets/v_06b4749017.mp4" type="video/mp4"></video>
   <div class="mascot-wrap" id="mwrap"><div class="mglow" id="mglow" aria-hidden="true"></div>
     <div class="headbox mhead-c" id="mHeadBox"><img class="headstrip" id="mHeadStrip" src="assets/head_sprite.webp" alt="Kostiantyn"><video class="sadvid" id="mSadVid" muted playsinline preload="none" poster="assets/sad_poster.jpg" aria-hidden="true"><source src="assets/sad_mobile.mp4" type="video/mp4"></video></div>
     <div class="bighead" id="bighead" role="img" aria-label="Kostiantyn Popov"></div>
-    <div class="mstate manim" id="m_idle" aria-hidden="true"></div>
     <div class="mstate manim" id="m_sad" aria-hidden="true"></div>
     <div class="mstate manim" id="m_happy" aria-hidden="true"></div>
     <div class="hero-sub" id="heroSub"></div>
   </div>
-  <div class="crt on">
-    <div class="crt-bg" id="media"></div><canvas id="tvnoise" class="tvnoise" aria-hidden="true"></canvas><div class="heroglow" aria-hidden="true"></div><div class="statfx" id="stat"></div><video id="catA" class="catvid" playsinline preload="none"><source src="assets/v_574ed8c3d2.webm" type="video/webm"><source src="assets/v_66853824b4.mp4" type="video/mp4"></video><video id="catB" class="catvid" playsinline preload="none"><source src="assets/v_a57fe2952e.webm" type="video/webm"><source src="assets/v_06b4749017.mp4" type="video/mp4"></video>
     <div class="crt-top">
       <div class="col"><span class="b">Kostiantyn Popov</span><span>Marketing Manager</span></div>
       <div class="col mid"><span>+48 507 947 156</span><span>Warsaw · Poland</span></div>
@@ -1173,8 +1174,8 @@ html{overflow-x:clip}
 (function(){
 
 var media=document.getElementById('media'),osd=document.getElementById('osd'),stat=document.getElementById('stat'),mwrap=document.getElementById('mwrap'),ctrls=document.getElementById('ctrls');var wall=document.getElementById('ptwall');
-var mspr=document.getElementById('bighead'),mIdle=document.getElementById('m_idle'),mSad=document.getElementById('m_sad'),mHap=document.getElementById('m_happy');
-var tgtF=6,curF=6;
+var mspr=document.getElementById('bighead'),mSad=document.getElementById('m_sad'),mHap=document.getElementById('m_happy');
+var tgtF=8,curF=8;
 var MOB=window.matchMedia('(max-width:640px)').matches;
 var mode='idle', off=false, overCtrls=false, returning=false, idleTimer=0;
 var frames=[{l:"showreel",b:"radial-gradient(84% 98% at 76% 54%,#5c6488 0%,#2c3358 34%,#191f3a 60%,#0c0f1e 82%,#0a0c17 100%)"}];
@@ -1186,11 +1187,11 @@ paint();setInterval(function(){if(Date.now()>=catU)fi=(fi+1)%frames.length;paint
 function flash(){stat.classList.remove('on');void stat.offsetWidth;stat.classList.add('on');}
 /* ---- image-based mascot ---- */
 function sprShow(on){if(mspr)mspr.style.opacity=on?'1':'0';}
-function renderSpr(){if(!mspr)return;var idx=Math.round(curF);if(idx<0)idx=0;if(idx>12)idx=12;mspr.style.backgroundPositionX=(idx*100/12).toFixed(2)+'%';mspr.style.transform='translateX('+((curF-6)*1.6).toFixed(1)+'px)';}
+function renderSpr(){if(!mspr)return;var idx=Math.round(curF);if(idx<0)idx=0;if(idx>16)idx=16;mspr.style.backgroundPositionX=(idx*100/16).toFixed(2)+'%';mspr.style.transform='translateX('+((curF-8)*1.3).toFixed(1)+'px)';}
 function animStop(el){if(el&&el._raf){cancelAnimationFrame(el._raf);el._raf=0;}}
 function animPlay(el,N,fps,opts){opts=opts||{};if(!el)return;animStop(el);var i=0,last=0,loop=!!opts.loop,hold=(opts.hold!=null?opts.hold:N-1);function set(k){el.style.backgroundPositionX=(k/(N-1)*100).toFixed(2)+'%';}set(0);function step(t){if(!last)last=t;if(t-last>=1000/fps){last=t;if(loop){i=(i+1)%N;set(i);}else{if(i<hold){i++;set(i);}else{set(hold);el._raf=0;return;}}}el._raf=requestAnimationFrame(step);}el._raf=requestAnimationFrame(step);}
-function face(name){[mIdle,mSad,mHap].forEach(function(e){if(e){e.classList.remove('on');animStop(e);}});if(name==='follow'){sprShow(true);return;}if(name==='idle'){sprShow(false);if(mIdle){mIdle.classList.add('on');animPlay(mIdle,10,7,{loop:true});}return;}if(name==='sad'){sprShow(false);if(mSad){mSad.classList.add('on');animPlay(mSad,10,8,{hold:4});}return;}if(name==='happy'){sprShow(false);if(mHap){mHap.classList.add('on');animPlay(mHap,11,11,{hold:10});}return;}sprShow(true);}
-function goIdle(){mode='idle';face('idle');if(MOB)return;curF=tgtF=6;renderSpr();}
+function face(name){[mSad,mHap].forEach(function(e){if(e){e.classList.remove('on');animStop(e);}});if(name==='sad'){sprShow(false);if(mSad){mSad.classList.add('on');animPlay(mSad,14,10,{hold:13});}return;}if(name==='happy'){sprShow(false);if(mHap){mHap.classList.add('on');animPlay(mHap,16,12,{hold:15});}return;}sprShow(true);}
+function goIdle(){mode='idle';face('idle');if(MOB)return;curF=tgtF=8;renderSpr();}
 function toFollow(){if(mode!=='follow'){mode='follow';face('follow');}}
 window.addEventListener('load',function(){if(MOB)return;renderSpr();goIdle();});
 function crt(cls){var c=document.querySelector('.crt');c.classList.remove('on','off');void c.offsetWidth;c.classList.add(cls);}
@@ -1205,13 +1206,13 @@ function raf(){
   requestAnimationFrame(raf);
 }
 requestAnimationFrame(raf);
-function startReturn(){returning=true;tgtF=6;}
+function startReturn(){returning=true;tgtF=8;}
 window.addEventListener('pointermove',function(e){
   if(off||overCtrls||mode==='react'||MOB)return;
   var dx=e.clientX-(window.innerWidth*0.5);
   var gx=Math.max(-1,Math.min(1, dx/(window.innerWidth*0.5)));
   returning=false; toFollow();
-  tgtF=(gx+1)/2*12;
+  tgtF=(gx+1)/2*16;
   clearTimeout(idleTimer); idleTimer=setTimeout(startReturn,900);
 });
 ctrls.addEventListener('mouseenter',function(){overCtrls=true;if(off)return;clearTimeout(idleTimer);returning=true;tgtS=0;});
