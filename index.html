@@ -3,10 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>K.Popov Marketer</title>
+<title>Kostiantyn Popov — Marketing Manager · Portfolio</title>
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="apple-touch-icon" href="assets/favicon-180.png">
+<meta name="description" content="Kostiantyn Popov — full-cycle Marketing Manager (real estate, automotive, brand &amp; growth, B2B). 8 case studies with real numbers: ROMI ≈500×, YouTube 800→40k, predictable lead machines. Open to remote, hybrid or relocation.">
+<meta name="author" content="Kostiantyn Popov">
+<meta name="theme-color" content="#0c0f1e">
+<link rel="canonical" href="https://detipozor.github.io/popov_mkt/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Kostiantyn Popov — Portfolio">
+<meta property="og:title" content="Kostiantyn Popov — Marketing Manager">
+<meta property="og:description" content="Full-cycle marketer with a storyteller’s instinct and a systems brain. 8 cases, real numbers. Open to remote / hybrid / relocation.">
+<meta property="og:image" content="https://detipozor.github.io/popov_mkt/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://detipozor.github.io/popov_mkt/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kostiantyn Popov — Marketing Manager">
+<meta name="twitter:description" content="Full-cycle marketer. 8 cases, real numbers. Open to remote / hybrid / relocation.">
+<meta name="twitter:image" content="https://detipozor.github.io/popov_mkt/assets/og.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Caveat:wght@600;700&family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -88,8 +104,8 @@ img{max-width:100%} [hidden]{display:none!important} a{color:inherit}
 .mstate{display:none}
 .mglow{display:none}
 .manim{background-repeat:no-repeat}
-#m_sad{background-image:url(assets/anim_sad.webp);background-size:2300% 100%;background-position:0 0}
-#m_happy{background-image:url(assets/anim_happy.webp);background-size:2400% 100%;background-position:0 0}
+#m_sad{background-size:2300% 100%;background-position:0 0}
+#m_happy{background-size:2400% 100%;background-position:0 0}
 @media(min-width:761px){.mglow{display:block;position:absolute;left:-24%;top:-8%;right:-12%;bottom:2%;z-index:0;pointer-events:none;background:radial-gradient(62% 76% at 54% 56%,rgba(150,158,200,.82),rgba(96,108,160,.5) 38%,rgba(44,52,96,.22) 64%,rgba(20,24,44,0) 80%)}.mstate{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:transform .4s cubic-bezier(.33,0,.2,1);z-index:5;pointer-events:none;filter:drop-shadow(0 22px 46px rgba(0,0,0,.5))}.mstate.on{opacity:1}#m_sad_img.on{transform:translateY(3%) rotate(-3deg);transform-origin:50% 62%}#mwrap{animation:mbreathe 5.6s ease-in-out infinite}@keyframes mbreathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}.bighead{display:block;position:absolute;inset:0;width:100%;height:100%;z-index:4;background-image:url(assets/turn_sprite.webp);background-repeat:no-repeat;background-size:3100% 100%;background-position:50% 0;filter:drop-shadow(0 22px 46px rgba(0,0,0,.5));transform-origin:50% 50%;will-change:background-position,transform,opacity}}
 @media(min-width:761px){
 .heroglow{display:block;position:absolute;right:0;top:0;bottom:0;width:64%;z-index:1;pointer-events:none;background:radial-gradient(ellipse 58% 54% at 74% 46%,rgba(78,108,66,.42),rgba(78,108,66,0) 62%)}
@@ -1202,10 +1218,11 @@ function sprShow(on){if(mspr)mspr.style.opacity=on?'1':'0';}
 function renderSpr(){if(!mspr)return;var idx=Math.round(curF);if(idx<0)idx=0;if(idx>30)idx=30;mspr.style.backgroundPositionX=(idx*100/30).toFixed(2)+'%';mspr.style.transform='translateX('+((curF-15)*0.7).toFixed(1)+'px)';}
 function animStop(el){if(el&&el._raf){cancelAnimationFrame(el._raf);el._raf=0;}}
 function animPlay(el,N,fps,opts){opts=opts||{};if(!el)return;animStop(el);var i=0,last=0,loop=!!opts.loop,hold=(opts.hold!=null?opts.hold:N-1);function set(k){el.style.backgroundPositionX=(k/(N-1)*100).toFixed(2)+'%';}set(0);function step(t){if(!last)last=t;if(t-last>=1000/fps){last=t;if(loop){i=(i+1)%N;set(i);}else{if(i<hold){i++;set(i);}else{set(hold);el._raf=0;return;}}}el._raf=requestAnimationFrame(step);}el._raf=requestAnimationFrame(step);}
-function face(name){[mSad,mHap].forEach(function(e){if(e){e.classList.remove('on');animStop(e);}});if(name==='sad'){sprShow(false);if(mSad){mSad.classList.add('on');animPlay(mSad,23,20,{hold:22});}return;}if(name==='happy'){sprShow(false);if(mHap){mHap.classList.add('on');animPlay(mHap,24,20,{hold:23});}return;}sprShow(true);}
+var _sprSet={};function ensureSpr(el,url){if(!el||_sprSet[url])return;el.style.backgroundImage='url('+url+')';_sprSet[url]=1;}
+function face(name){[mSad,mHap].forEach(function(e){if(e){e.classList.remove('on');animStop(e);}});if(name==='sad'){ensureSpr(mSad,'assets/anim_sad.webp');sprShow(false);if(mSad){mSad.classList.add('on');animPlay(mSad,23,20,{hold:22});}return;}if(name==='happy'){ensureSpr(mHap,'assets/anim_happy.webp');sprShow(false);if(mHap){mHap.classList.add('on');animPlay(mHap,24,20,{hold:23});}return;}sprShow(true);}
 function goIdle(){mode='idle';face('idle');if(MOB)return;curF=tgtF=15;renderSpr();}
 function toFollow(){if(mode!=='follow'){mode='follow';face('follow');}}
-window.addEventListener('load',function(){if(MOB)return;renderSpr();goIdle();});
+window.addEventListener('load',function(){if(MOB)return;renderSpr();goIdle();var _ric=window.requestIdleCallback||function(f){return setTimeout(f,1400);};_ric(function(){ensureSpr(mSad,'assets/anim_sad.webp');ensureSpr(mHap,'assets/anim_happy.webp');});});
 function crt(cls){var c=document.querySelector('.crt');c.classList.remove('on','off');void c.offsetWidth;c.classList.add(cls);}
 function dotFlash(){var d=document.getElementById('crtdot');if(!d)return;d.classList.remove('flash');void d.offsetWidth;d.classList.add('flash');}
 function raf(){
