@@ -1218,6 +1218,7 @@ function raf(){
   requestAnimationFrame(raf);
 }
 requestAnimationFrame(raf);
+if(MOB){(function mobScan(t){requestAnimationFrame(mobScan);if(off||mode==='react')return;curF=15+13*Math.sin(t/1300);renderSpr();})(0);}
 function startReturn(){returning=true;tgtF=15;}
 window.addEventListener('pointermove',function(e){
   if(off||overCtrls||mode==='react'||MOB)return;
